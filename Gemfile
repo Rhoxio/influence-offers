@@ -72,3 +72,5 @@ gem "awesome_print", "~> 1.9"
 gem "activeadmin", "~> 3.1"
 
 gem "devise", "~> 4.9"
+
+gem 'sassc-rails'
