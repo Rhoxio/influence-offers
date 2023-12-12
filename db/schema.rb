@@ -34,6 +34,7 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_12_104333) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["offer_id"], name: "index_claimed_offers_on_offer_id"
+    t.index ["player_id", "offer_id"], name: "index_claimed_offers_on_player_id_and_offer_id", unique: true
     t.index ["player_id"], name: "index_claimed_offers_on_player_id"
   end
 

@@ -13,6 +13,10 @@ class Player < ApplicationRecord
   validates :age, numericality: {in: AGE_RANGE}
 
   has_many :claimed_offers
+  has_many :offers, through: :claimed_offers
+
+
+  # private
   # def ransackable_associations(auth_object = nil)
   #   []
   # end         

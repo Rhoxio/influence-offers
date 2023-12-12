@@ -15,7 +15,7 @@ class Offer < ApplicationRecord
   before_validation :assign_default_max_and_min
 
   has_many :claimed_offers
-  has_many :players, through: :claimed_offers, source: :offer
+  has_many :players, through: :claimed_offers
 
   private
 
