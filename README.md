@@ -17,6 +17,7 @@ Gems:
 [factory_bot](https://github.com/thoughtbot/factory_bot)  
 [rspec-rails](https://github.com/rspec/rspec-rails)  
 [pg](https://github.com/ged/ruby-pg)
+[shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
 
 Database:
 Postgresql
