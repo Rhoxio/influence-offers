@@ -15,6 +15,26 @@ RSpec.describe Offer, type: :model do
     # TODO
   end
 
+  describe "before_validation" do 
+
+    before(:each) do 
+      # No min_age or max_age - should call #assign_default_max_and_min on validation
+      @offer = Offer.new(title: "Incomplete Offer", description:"Incomplete", target_age: 30)
+    end
+
+    context "ranges" do 
+      it "will assign a default max_age" do 
+        @offer.save
+        expect(@offer.max_age).to eq(@offer.target_age + 1)
+      end
+
+      it "will assign a default min_age" do 
+        @offer.save
+        expect(@offer.min_age).to eq(@offer.target_age - 1)        
+      end    
+    end 
+  end  
+
   describe 'validations' do 
     it { should validate_presence_of(:title) }
     it { should validate_length_of(:title) }
@@ -51,23 +71,14 @@ RSpec.describe Offer, type: :model do
     end
   end  
 
-  describe "before_validation" do 
-
+  describe "defaults" do
     before(:each) do 
-      @offer = Offer.new(title: "Incomplete Offer", description:"Incomplete", target_age: 30)
+      @offer = FactoryBot.build(:new_offer)
     end
 
-    context "ranges" do 
-      it "will assign a default max_age" do 
-        @offer.save
-        expect(@offer.max_age).to eq(@offer.target_age + 1)
-      end
-
-      it "will assign a default min_age" do 
-        @offer.save
-        expect(@offer.min_age).to eq(@offer.target_age - 1)        
-      end    
-    end 
+    it "on total_claimed should be 0" do 
+      expect(FactoryBot.create(:new_offer).total_claimed).to eq(0)
+    end    
   end
 
 end
