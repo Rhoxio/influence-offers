@@ -17,7 +17,9 @@ RSpec.describe Player, type: :model do
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
     it { should validate_presence_of(:gender) }
+    
     it { should validate_presence_of(:age) }
+    it { should validate_numericality_of(:age) }
 
     context "whitelisting" do 
 
@@ -45,7 +47,7 @@ RSpec.describe Player, type: :model do
 
       context "age" do 
 
-        it "should error out if age is out of range" do
+        it "should error out if out of range" do
           @player.age = Player::AGE_RANGE.min - 1
           expect(@player.valid?).to eq(false)
           expect{@player.save!}. to raise_error(ActiveRecord::RecordInvalid)

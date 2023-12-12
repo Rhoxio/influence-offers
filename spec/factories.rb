@@ -7,4 +7,12 @@ FactoryBot.define do
     gender {"female"}
   end
 
+  factory :new_offer, class: Offer do 
+    title {"Test Offer"}
+    description {"Test description for a test offer."}
+    target_age {35}
+    min_age {30}
+    max_age {40}
+  end
+
 end

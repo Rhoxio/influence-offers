@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_12_070522) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_12_085407) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -26,6 +26,18 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_12_070522) do
     t.index ["author_type", "author_id"], name: "index_active_admin_comments_on_author"
     t.index ["namespace"], name: "index_active_admin_comments_on_namespace"
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "target_age"
+    t.integer "max_age"
+    t.integer "min_age"
+    t.integer "total_claimed", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["target_age"], name: "index_offers_on_target_age"
   end
 
   create_table "players", force: :cascade do |t|
