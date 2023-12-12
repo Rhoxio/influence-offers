@@ -12,16 +12,13 @@ RSpec.describe Offer, type: :model do
   end  
 
   describe 'associations' do 
-    it "will sandbox" do
-      @offer = FactoryBot.create(:new_offer)
-      # ap @offer.players
-    end
+    it {should have_many(:players)}
   end
 
   describe "before_validation" do 
 
     before(:each) do 
-      # No min_age or max_age - should call #assign_default_max_and_min on validation
+      # If no min_age or max_age - should call #assign_default_max_and_min on validation
       @offer = Offer.new(title: "Incomplete Offer", description:"Incomplete", target_age: 30)
     end
 

@@ -10,14 +10,14 @@ RSpec.describe Player, type: :model do
   end
 
   describe 'associations' do 
-    # TODO
+    it {should have_many(:claimed_offers)}
   end
 
   describe 'validations' do 
     it { should validate_presence_of(:email) }
     it { should validate_presence_of(:password) }
     it { should validate_presence_of(:gender) }
-    
+
     it { should validate_presence_of(:age) }
     it { should validate_numericality_of(:age) }
 
