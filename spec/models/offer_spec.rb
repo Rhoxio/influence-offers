@@ -12,7 +12,10 @@ RSpec.describe Offer, type: :model do
   end  
 
   describe 'associations' do 
-    # TODO
+    it "will sandbox" do
+      @offer = FactoryBot.create(:new_offer)
+      # ap @offer.players
+    end
   end
 
   describe "before_validation" do 
@@ -37,15 +40,14 @@ RSpec.describe Offer, type: :model do
 
   describe 'validations' do 
     it { should validate_presence_of(:title) }
-    it { should validate_length_of(:title) }
-
-    it { should validate_length_of(:description) }
-
     it { should validate_presence_of(:target_age) }
+
+    it { should validate_length_of(:title) }
+    it { should validate_length_of(:description) }
+    
     it { should validate_numericality_of(:target_age) }
     it { should validate_numericality_of(:max_age) }
     it { should validate_numericality_of(:min_age) }
-
 
     before(:each) do 
       @offer = FactoryBot.build(:new_offer)
