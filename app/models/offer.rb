@@ -14,7 +14,8 @@ class Offer < ApplicationRecord
 
   before_validation :assign_default_max_and_min
 
-  has_many :claimed_offers
+  # Using dependent: :destroy to keep data cleaner for this situation.
+  has_many :claimed_offers, dependent: :destroy
   has_many :players, through: :claimed_offers
 
   private

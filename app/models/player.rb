@@ -12,7 +12,8 @@ class Player < ApplicationRecord
   validates :age, presence: true
   validates :age, numericality: {in: AGE_RANGE}
 
-  has_many :claimed_offers
+  # Using dependent: :destroy to keep data cleaner for this situation.
+  has_many :claimed_offers, dependent: :destroy
   has_many :offers, through: :claimed_offers
 
 

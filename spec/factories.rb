@@ -1,7 +1,7 @@
 FactoryBot.define do
 
   factory :new_player, class: Player do
-    email {"test@testers.com"}
+    email {Faker::Internet.email}
     password {"password"}
     age {35}
     gender {"female"}

@@ -12,6 +12,7 @@ RSpec.describe Offer, type: :model do
   end  
 
   describe 'associations' do 
+    it {should have_many(:claimed_offers)}
     it {should have_many(:players)}
   end
 

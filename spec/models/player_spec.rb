@@ -10,6 +10,7 @@ RSpec.describe Player, type: :model do
   end
 
   describe 'associations' do 
+    it {should have_many(:offers)}
     it {should have_many(:claimed_offers)}
   end
 
