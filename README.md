@@ -15,7 +15,7 @@ Gems:
 [pry](https://github.com/pry/pry)  
 [faker](https://github.com/faker-ruby/faker)  
 [factory_bot](https://github.com/thoughtbot/factory_bot)  
-[rspec-rails](https://github.com/rspec/rspec-rails)
+[rspec-rails](https://github.com/rspec/rspec-rails)  
 [pg](https://github.com/ged/ruby-pg)
 
 Database:
