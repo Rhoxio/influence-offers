@@ -3,5 +3,7 @@ class OffersController < ApplicationController
 
   def discover
   end
-  
+
+  def claimed
+  end
 end
