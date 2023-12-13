@@ -1,17 +1,28 @@
 # Colors come from config/intializers/string_patches.rb
 
-# Seed Offers
-# Seed Tags
-# Associate Offers with 2 Tags each
-
 def bar
   Array.new(50, "-").join.green
+end
+
+def generate_offer(age_range, gender)
+  target_age = age_range.sample
+  offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map(&:capitalize).join(" ")
+  offer_data = {
+    title: offer_name,
+    description: Faker::Marketing.buzzwords,
+    target_age: target_age,
+    target_gender: gender,
+    max_age: target_age + ((3..6).to_a.sample),
+    min_age: target_age - ((3..6).to_a.sample)
+  }
+  offer = Offer.create!(offer_data)    
+  puts "Generated Offer: #{offer.title}".blue
 end
 
 if Rails.env.development?
 
   puts bar
-  puts "Running seeds in Development Environment...".green
+  puts "Running seeds in #{Rails.env}".green
   puts bar
 
   puts "Creating Tags...".blue
@@ -29,52 +40,52 @@ if Rails.env.development?
   # I want some variance in the offers. 
   # 67% female, 88% 25+ years old according to the website.
   # I can follow these metrics fairly easily.
+  offer_count = Offer.all.length
 
-  # Female-Targeted, 25+
-  if Offer.all.length == 0
+  puts "Skipping Offer Generation. #{offer_count} Offers already exist.".yellow if offer_count > 0
+
+  if offer_count == 0
+    puts "Generating Offers...".blue
     lucrative_female_age_range = (25..45).to_a
     upper_female_age_range = (46..65).to_a
     lower_female_age_range = (16..24).to_a
 
+    random_distribution = (16..65).to_a
+
+    # Females
+    # 60 Lucrative, 4 Over, 3 under - Gives close to an 88% ratio.
+    # 60 + 4 + 3 = 67, -33
     60.times do
-      target_age = lucrative_female_age_range.sample
-      offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map{|w| w.capitalize}.join(" ")
-      offer_data = {
-        title: offer_name,
-        description: Faker::Marketing.buzzwords,
-        target_age: target_age,
-        max_age: target_age + ((3..6).to_a.sample),
-        min_age: target_age - ((3..6).to_a.sample)
-      }
-      Offer.create!(offer_data)
+      generate_offer(lucrative_female_age_range, "female")
     end
 
     4.times do 
-      target_age = upper_female_age_range.sample
-      offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map{|w| w.capitalize}.join(" ")
-      offer_data = {
-        title: offer_name,
-        description: Faker::Marketing.buzzwords,
-        target_age: target_age,
-        max_age: target_age + ((3..6).to_a.sample),
-        min_age: target_age - ((3..6).to_a.sample)
-      }
-      Offer.create!(offer_data)      
+      generate_offer(upper_female_age_range, "female")     
     end
 
     3.times do 
-      target_age = lower_female_age_range.sample
-      offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map{|w| w.capitalize}.join(" ")
-      offer_data = {
-        title: offer_name,
-        description: Faker::Marketing.buzzwords,
-        target_age: target_age,
-        max_age: target_age + ((3..6).to_a.sample),
-        min_age: target_age - ((3..6).to_a.sample)
-      }
-      Offer.create!(offer_data)      
+      generate_offer(lower_female_age_range, "female")     
     end    
 
+    # Males
+    # 67+18 = 85, -15
+    18.times do 
+      generate_offer(random_distribution, "male")
+    end
+
+    # Non-Binary
+    # 85+7 = 92, -8
+    7.times do 
+      generate_offer(random_distribution, "nonbinary")
+    end
+
+    # Declined
+    # 92+8 = 100, 0
+    8.times do 
+      generate_offer(random_distribution, "declined")
+    end
   end
+
+  puts bar
 
 end
