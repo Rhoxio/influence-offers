@@ -33,7 +33,20 @@ RSpec.describe Offer, type: :model do
       it "will assign a default min_age" do 
         @offer.save
         expect(@offer.min_age).to eq(@offer.target_age - 1)        
-      end    
+      end  
+
+      context 'defaults with #assign_default_max_and_min' do 
+        it "will not assign max_age if out of range" do 
+          @offer.target_age = 125
+          expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
+        end  
+
+        it "will not assign min_age if out of range" do 
+          @offer.target_age = 1
+          expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
+        end           
+      end
+     
     end 
   end  
 
