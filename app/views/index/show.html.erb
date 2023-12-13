@@ -1,1 +1,14 @@
+<div class="front">
+
+  <h1 class="jumbo-header">Earn rewards for playing games!</h1>
+  <h3 class="header-subtitle">Sign up today to start earning cash, premium currency, or play time with our special offers.</h3>
+
+  <div class="action-container">
+    <%= button_to "SIGN IN", new_player_session_path, method: :get, class: "sign-in" %>
+    <%= button_to "SIGN UP", new_player_registration_path, method: :get, class: "sign-up" %>    
+  </div>
+
+</div>
+
+
 <%= react_component("Index", { greeting: "Hello from react-rails." }) %>

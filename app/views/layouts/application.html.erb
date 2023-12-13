@@ -11,8 +11,21 @@
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header>
+      <div class="title">
+        <a href="/">Influence Offers</a>
+      </div>
+      <div class="session-buttons">
+        <% if player_signed_in? %>
+          <%= button_to "Sign Out", destroy_player_session_path, method: :delete  %>
+        <% end %>        
+      </div>
+    </header>
+    <% flash.each do |type, msg| %>
+      <div id='flash-container'>
+        <p class="<%= type%> flash-msg"><%= msg %></p>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>
