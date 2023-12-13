@@ -1,5 +1,9 @@
 FactoryBot.define do
 
+  factory :tag do
+    name {Faker::Marketing.buzzwords.first(20)}
+  end
+
   factory :new_player, class: Player do
     email {Faker::Internet.email}
     password {"password"}

@@ -14,9 +14,12 @@ class Offer < ApplicationRecord
 
   before_validation :assign_default_max_and_min
 
-  # Using dependent: :destroy to keep data cleaner for this situation.
+  # Using dependent: :destroy to keep data cleaner in the scope of this app.
   has_many :claimed_offers, dependent: :destroy
   has_many :players, through: :claimed_offers
+
+  has_many :offer_tags, dependent: :destroy
+  has_many :tags, through: :offer_tags
 
   private
 

@@ -14,6 +14,7 @@ RSpec.describe Offer, type: :model do
   describe 'associations' do 
     it {should have_many(:claimed_offers)}
     it {should have_many(:players)}
+    it {should have_many(:tags)}
   end
 
   describe "before_validation" do 
