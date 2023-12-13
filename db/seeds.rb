@@ -4,6 +4,11 @@ def bar
   Array.new(50, "-").join.green
 end
 
+def random_tags(count)
+  return Tag.all.shuffle.take(count) if Tag.all.count > 0
+  return []
+end
+
 def generate_offer(age_range, gender)
   target_age = age_range.sample
   offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map(&:capitalize).join(" ")
@@ -15,7 +20,8 @@ def generate_offer(age_range, gender)
     max_age: target_age + ((3..6).to_a.sample),
     min_age: target_age - ((3..6).to_a.sample)
   }
-  offer = Offer.create!(offer_data)    
+  offer = Offer.create!(offer_data)
+  offer.tags << random_tags(3)    
   puts "Generated Offer: #{offer.title}".blue
 end
 
