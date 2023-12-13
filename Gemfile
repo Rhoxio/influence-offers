@@ -72,3 +72,7 @@ gem "activeadmin", "~> 3.1"
 gem "devise", "~> 4.9"
 
 gem 'sassc-rails'
+
+gem "react_on_rails", "= 13.4"
+
+gem "shakapacker", "= 7.1"
