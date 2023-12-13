@@ -3,7 +3,7 @@
 
 .front{
   display: inline-block;
-  background-color: #26c493;
+  background-color: $influence-green;
 
   .jumbo-header{
     @include breakpoint(sm) {
@@ -38,7 +38,7 @@
       border: none;
       border-radius: 5px;
       box-shadow: 0px 3px 6px -3px gray;
-      
+
       @include breakpoint(sm) {
         padding: 14px 30px;
         font-size: 18px;
