@@ -24,6 +24,16 @@
         <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
       </div>
 
+      <div class="field">
+        <%= f.label :gender %><br/>
+        <%= f.select :gender, [['Female', 'female'], ['Male', 'male'],['Non-Binary', 'nonbinary'], ['Decline to Answer', 'decline'] ] %>
+      </div>
+
+      <div class="field">
+        <%= f.label :age %><br/>
+        <%= f.number_field :age %>
+      </div>      
+
       <div class="actions">
         <%= f.submit "Sign up" %>
       </div>
