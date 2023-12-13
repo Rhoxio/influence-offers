@@ -1,6 +1,7 @@
 class Offer < ApplicationRecord
 
-  AGE_BOUNDS = 1...125
+  AGE_BOUNDS = 1..125
+  GENDERS = ["male", "female", "nonbinary", "declined"].freeze
 
   validates :title, presence: true
   validates :title, length: {maximum: 80}
@@ -11,6 +12,9 @@ class Offer < ApplicationRecord
   validates :target_age, numericality: {in: AGE_BOUNDS}
   validates :max_age, numericality: {in: AGE_BOUNDS}
   validates :min_age, numericality: {in: AGE_BOUNDS}
+
+  validates :target_gender, presence: true
+  validates :target_gender, inclusion: {in: GENDERS, message: "Invalid gender specified"}  
 
   before_validation :assign_default_max_and_min
 

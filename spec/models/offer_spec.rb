@@ -6,9 +6,12 @@ RSpec.describe Offer, type: :model do
     it { is_expected.to have_db_column(:title).of_type(:string) }
     it { is_expected.to have_db_column(:description).of_type(:text) }
     it { is_expected.to have_db_column(:target_age).of_type(:integer) }
+    it { is_expected.to have_db_column(:target_gender).of_type(:string) }
     it { is_expected.to have_db_column(:max_age).of_type(:integer) }
     it { is_expected.to have_db_column(:min_age).of_type(:integer) }
     it { is_expected.to have_db_column(:total_claimed).of_type(:integer) }
+
+    # test target_gender
   end  
 
   describe 'associations' do 
@@ -64,6 +67,24 @@ RSpec.describe Offer, type: :model do
     before(:each) do 
       @offer = FactoryBot.build(:new_offer)
     end
+
+    context "target_gender" do
+
+      it "should error out if not in whitelist" do
+        @offer.target_gender = "none"
+        expect(@offer.valid?).to eq(false)
+        expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
+      end
+
+      it "should save if present in the whitelist" do
+        Offer::GENDERS.each do |target_gender|
+          @offer.target_gender = target_gender
+          expect(@offer.valid?).to eq(true)
+          expect(@offer.save!).to eq(true)          
+        end        
+      end 
+
+    end    
 
     context "target_age" do 
       it "should be valid if in range" do 

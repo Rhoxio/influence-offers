@@ -1,7 +1,7 @@
 class Player < ApplicationRecord
 
-  GENDERS = ["male", "female", "nonbinary", "declined"]
-  AGE_RANGE = 1...125
+  GENDERS = ["male", "female", "nonbinary", "declined"].freeze
+  AGE_RANGE = 1..125
 
   devise :database_authenticatable, :registerable,
          :rememberable, :validatable
