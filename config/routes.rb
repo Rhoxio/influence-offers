@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'hello_world', to: 'hello_world#index'
   ActiveAdmin.routes(self)
   devise_for :players, :controllers => { registrations: 'players/registrations' }
   # Define your application routes per the DSL in https://guides.rubyonrails.org/routing.html
