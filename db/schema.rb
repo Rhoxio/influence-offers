@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_12_044523) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_13_021045) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -28,6 +28,39 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_12_044523) do
     t.index ["resource_type", "resource_id"], name: "index_active_admin_comments_on_resource"
   end
 
+  create_table "claimed_offers", force: :cascade do |t|
+    t.bigint "player_id"
+    t.bigint "offer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_claimed_offers_on_offer_id"
+    t.index ["player_id", "offer_id"], name: "index_claimed_offers_on_player_id_and_offer_id", unique: true
+    t.index ["player_id"], name: "index_claimed_offers_on_player_id"
+  end
+
+  create_table "offer_tags", force: :cascade do |t|
+    t.bigint "tag_id"
+    t.bigint "offer_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["offer_id"], name: "index_offer_tags_on_offer_id"
+    t.index ["tag_id", "offer_id"], name: "index_offer_tags_on_tag_id_and_offer_id", unique: true
+    t.index ["tag_id"], name: "index_offer_tags_on_tag_id"
+  end
+
+  create_table "offers", force: :cascade do |t|
+    t.string "title"
+    t.text "description"
+    t.integer "target_age"
+    t.integer "max_age"
+    t.integer "min_age"
+    t.integer "total_claimed", default: 0
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "target_gender"
+    t.index ["target_age"], name: "index_offers_on_target_age"
+  end
+
   create_table "players", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -36,8 +69,17 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_12_044523) do
     t.datetime "remember_created_at"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "age"
+    t.string "gender"
     t.index ["email"], name: "index_players_on_email", unique: true
     t.index ["reset_password_token"], name: "index_players_on_reset_password_token", unique: true
+  end
+
+  create_table "tags", force: :cascade do |t|
+    t.string "name"
+    t.string "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

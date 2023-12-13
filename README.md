@@ -14,9 +14,11 @@ Gems:
 [sassc-rails](https://github.com/sass/sassc-rails)  
 [pry](https://github.com/pry/pry)  
 [faker](https://github.com/faker-ruby/faker)  
-[factory_bot](https://github.com/thoughtbot/factory_bot)  
+[factory_bot_rails](https://github.com/thoughtbot/factory_bot_rails)  
 [rspec-rails](https://github.com/rspec/rspec-rails)  
 [pg](https://github.com/ged/ruby-pg)
+[shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
+[database_cleaner-active_record](https://github.com/DatabaseCleaner/database_cleaner)
 
 Database:
 Postgresql
