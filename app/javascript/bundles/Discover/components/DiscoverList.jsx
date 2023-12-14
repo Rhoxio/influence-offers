@@ -1,13 +1,16 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DiscoverContext } from './DiscoverContext'
+import Offer from "./Offer"
 
-const DiscoverList = ({offers}) => {
-  // console.log(offers)
+const DiscoverList = () => {
+  const offers = useContext(DiscoverContext)
+  console.log(offers)
   return(
     <div className="offers-list">
       {
-        offers.map((offer, index) => (
-          <h3 className="offer" key={index}>{offer.title}</h3>
+        offers.map((collection, index) => (
+          <Offer offer={collection.offer} tags={collection.tags} key={`offer-${collection.offer.id}`}/>
         ))
       }
     </div>
