@@ -1,0 +1,95 @@
+@import "breakpoints";
+@import "variables";
+
+.auth-container{
+  background-color: $influence-green;
+  @include breakpoint(sm) {
+    padding: 20px 10%;
+    // height: 750px;
+  }
+
+  h2{
+    margin:0;
+    padding: 0;
+    text-align: center;
+    @include breakpoint(sm) {
+      margin-bottom: 20px;
+    }
+  }
+
+  .auth-form-container{
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0px 3px 6px -3px gray;
+    @include breakpoint(sm) {
+      padding: 10px 5%;
+      margin-top: 150px; 
+    }
+
+    #error_explanation{
+      h2{
+        font-size: 14px;
+      }
+      ul{
+        li{
+          color: red;
+          font-size: 12px;    
+        }
+      }
+      
+    }
+  }
+
+  .sign-up{
+    margin-top: 30px;
+  }
+
+  .actions{
+    margin-bottom: 10px;
+
+    input{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-orange;
+      width: 100%;
+      color: white;
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        // letter-spacing: 1px;
+      }
+    }   
+  }  
+
+  div.field_with_errors + br {
+    display: none
+  }
+
+  .field{
+    margin-bottom: 10px;
+
+    em{
+      font-size: 12px;
+    }
+
+    label{
+      font-size: 20px;
+    }
+
+    input{
+      width: 100%;
+      padding: 5px 0;
+      font-size: 18px;
+    }
+
+    select{
+      width: 100%;
+      padding: 5px 0;
+      font-size: 18px;
+    }      
+
+
+  }
+}

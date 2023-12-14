@@ -50,7 +50,7 @@ GEM
       erubi (~> 1.11)
       rails-dom-testing (~> 2.2)
       rails-html-sanitizer (~> 1.6)
-    activeadmin (3.1.0)
+    activeadmin (3.2.0)
       arbre (~> 1.2, >= 1.2.1)
       formtastic (>= 3.1)
       formtastic_i18n (>= 0.4)
@@ -90,13 +90,9 @@ GEM
       activesupport (>= 3.0.0)
       ruby2_keywords (>= 0.0.2)
     awesome_print (1.9.2)
-    babel-source (5.8.35)
-    babel-transpiler (0.7.0)
-      babel-source (>= 4.0, < 6)
-      execjs (~> 2.0)
     base64 (0.2.0)
     bcrypt (3.1.20)
-    bigdecimal (3.1.4)
+    bigdecimal (3.1.5)
     bindex (0.8.1)
     bootsnap (1.17.0)
       msgpack (~> 1.2)
@@ -119,9 +115,9 @@ GEM
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
     date (3.3.4)
-    debug (1.8.0)
-      irb (>= 1.5.0)
-      reline (>= 0.3.1)
+    debug (1.9.0)
+      irb (~> 1.10)
+      reline (>= 0.3.8)
     devise (4.9.3)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
@@ -142,6 +138,7 @@ GEM
     faker (3.2.2)
       i18n (>= 1.8.11, < 2)
     ffi (1.16.3)
+    foreman (0.87.2)
     formtastic (5.0.0)
       actionpack (>= 6.0.0)
     formtastic_i18n (0.7.0)
@@ -157,7 +154,7 @@ GEM
       has_scope (>= 0.6)
       railties (>= 6.0)
       responders (>= 2)
-    io-console (0.6.0)
+    io-console (0.7.0)
     irb (1.10.1)
       rdoc
       reline (>= 0.3.8)
@@ -195,7 +192,7 @@ GEM
     minitest (5.20.0)
     msgpack (1.7.2)
     mutex_m (0.2.0)
-    net-imap (0.4.7)
+    net-imap (0.4.8)
       date
       net-protocol
     net-pop (0.1.2)
@@ -261,6 +258,7 @@ GEM
       rake (>= 12.2)
       thor (~> 1.0, >= 1.2.2)
       zeitwerk (~> 2.6)
+    rainbow (3.1.1)
     rake (13.1.0)
     ransack (4.1.1)
       activerecord (>= 6.1.5)
@@ -268,12 +266,12 @@ GEM
       i18n
     rdoc (6.6.1)
       psych (>= 4.0.0)
-    react-rails (3.1.1)
-      babel-transpiler (>= 0.7.0)
+    react_on_rails (13.4.0)
+      addressable
       connection_pool
-      execjs
-      railties (>= 3.2)
-      tilt
+      execjs (~> 2.5)
+      rails (>= 5.2)
+      rainbow (~> 3.0)
     regexp_parser (2.8.3)
     reline (0.4.1)
       io-console (~> 0.5)
@@ -365,12 +363,13 @@ DEPENDENCIES
   error_highlight (>= 0.4.0)
   factory_bot_rails
   faker (~> 3.2)
+  foreman
   jbuilder
   pg (~> 1.1)
   pry (~> 0.14.2)
   puma (>= 5.0)
   rails (~> 7.1.2)
-  react-rails (= 3.1.1)
+  react_on_rails (= 13.4)
   rspec-rails (~> 6.1)
   sassc-rails
   selenium-webdriver

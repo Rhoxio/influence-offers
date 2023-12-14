@@ -1,0 +1,128 @@
+@import "breakpoints";
+@import "variables";
+
+$header-row-color: #c9c9c9;
+
+.discover-container{
+  background-color: white;
+  border-radius: 10px;
+
+  .discover-title{
+    font-size: 20px;
+    text-align: center;
+    margin-top: 0;
+    display: inline-block;
+    width: 100%;
+  }
+
+  @include breakpoint(sm) {
+    margin: 10px 5%;
+    padding: 10px 5%;
+  }
+
+  .discover-form{
+    hr{
+      border-color: $header-row-color;
+    }
+
+    .suggest-button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-green;
+      color: white;      
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        width: 100%;
+        margin-top: 3px;
+      }
+    }
+
+    .filter-button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-orange;
+      color: white;      
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        width: 100%;
+        margin-top: 3px;
+      }
+    }     
+  }
+  
+
+  .offers-list{
+    display: grid;
+    padding-top: 10px;
+    @include breakpoint(sm) {
+
+    }
+
+    .offer{
+      background-color: $offer-bg;
+      margin-bottom: 5px;
+      border-radius: 2px;
+      padding: 15px 5%;
+
+      .offer-title{
+        font-size: 18px;
+        margin: 0;
+        padding: 0;
+      }
+
+      .offer-description{
+        font-size: 12px;
+      }
+
+      hr{
+        border-color: $header-row-color;
+        margin: 10px 0 10px; 
+      }         
+
+      .tag-container{
+        display: inline-block;
+        // white-space: nowrap;
+        // overflow: auto;
+        .tag{
+          background-color: #bebeff;
+          font-size: 10px;
+          padding: 3px;
+          margin-right: 3px;
+          display: inline-block;
+          border-radius: 3px;
+        }    
+
+      }
+     
+
+    .claim-button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-blue;
+      color: white;  
+
+      &:disabled{
+        background-color: grey;
+      }    
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        width: 100%;
+      }
+    }      
+
+
+    }
+  }
+}

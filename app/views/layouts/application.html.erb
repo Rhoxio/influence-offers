@@ -7,12 +7,30 @@
     <%= csp_meta_tag %>
 
     <%= stylesheet_link_tag "application" %>
-    <%= javascript_pack_tag "application" %>
+
+
+    <%= javascript_pack_tag 'discover-bundle' %>
+    <%= stylesheet_pack_tag 'hello-world-bundle' %>    
   </head>
 
   <body>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <header>
+      <div class="title">
+        <a href="/">Influence <span class="orange-text">Offers</span></a>
+      </div>
+      <div class="session-buttons">
+        <% if player_signed_in? %>
+          <%= button_to "SIGN OUT", destroy_player_session_path, method: :delete, class: "sign-out"  %>
+        <% else %>
+          <%= button_to "SIGN IN", new_player_session_path, method: :get, class: "sign-in" %>
+        <% end %>        
+      </div>
+    </header>
+    <% flash.each do |type, msg| %>
+      <div id='flash-container'>
+        <p class="<%= type%> flash-msg"><%= msg %></p>
+      </div>
+    <% end %>
     <%= yield %>
   </body>
 </html>

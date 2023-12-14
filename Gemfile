@@ -65,10 +65,6 @@ group :test do
   gem 'database_cleaner-active_record'
 end
 
-gem "shakapacker", "= 7.1"
-
-gem "react-rails", "= 3.1.1"
-
 gem "awesome_print", "~> 1.9"
 
 gem "activeadmin", "~> 3.1"
@@ -76,3 +72,9 @@ gem "activeadmin", "~> 3.1"
 gem "devise", "~> 4.9"
 
 gem 'sassc-rails'
+
+gem "react_on_rails", "= 13.4"
+
+gem "shakapacker", "= 7.1"
+
+gem "foreman"

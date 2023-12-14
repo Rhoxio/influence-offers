@@ -7,7 +7,7 @@ Rails Version: `7.1.2`
 
 Gems:  
 [Shakapacker](https://github.com/shakacode/shakapacker)  
-[react-rails](https://github.com/reactjs/react-rails)  
+[react_on_rails](https://www.shakacode.com/react-on-rails/docs/)  
 [awesome_print](https://github.com/awesome-print/awesome_print)  
 [activeadmin](https://activeadmin.info/index.html)  
 [devise](https://github.com/heartcombo/devise)  
@@ -19,6 +19,8 @@ Gems:
 [pg](https://github.com/ged/ruby-pg)
 [shoulda-matchers](https://github.com/thoughtbot/shoulda-matchers)
 [database_cleaner-active_record](https://github.com/DatabaseCleaner/database_cleaner)
+[foreman](https://rubygems.org/gems/foreman)
+
 
 Database:
 Postgresql
@@ -28,7 +30,8 @@ Setup:
  - run `bundle install` to install gems/dependencies
  - run `rails db:setup` to prepare the database and run migrations
  - run `rails db:seed` to add development data to the database
- - run `rails s` to start the server
+ - add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
+ - run `./bin/dev` to start the server with Shakapacker and `rails s`-type logging
  - navigate to `http://localhost:3000` in your browser to begin using the app
 
 Running Tests:

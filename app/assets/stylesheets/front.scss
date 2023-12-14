@@ -1,0 +1,65 @@
+@import "breakpoints";
+@import "variables";
+
+.front{
+  display: inline-block;
+  background-color: $influence-green;
+
+  .jumbo-header{
+    @include breakpoint(sm) {
+      font-size: 36px;
+      line-height: 39px;
+      text-align: center;
+      margin-top: 70px;  
+      padding: 0 10%;
+    }
+  }
+
+  .header-subtitle{
+    @include breakpoint(sm) {
+      padding: 0 10%;
+      font-size: 18px;
+      text-align: center;
+      line-height: 24px;
+    }
+  }
+
+  .action-container{
+    display: flex;
+    justify-content: space-around;
+    // background-color: pink;
+
+    @include breakpoint(sm) {
+      margin: 0 10%;
+      padding: 50px 0;  
+    }
+
+    button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+      }
+    }
+
+    .sign-in{
+      background-color: $influence-orange;
+      border: none;
+      color: white;
+    }
+
+    .sign-up{
+      background-color: $influence-blue;
+      border: none;
+      color: white;
+    }    
+  }
+
+  @include breakpoint(sm) {
+
+  }
+}
