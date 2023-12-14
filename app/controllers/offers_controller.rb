@@ -3,6 +3,7 @@ class OffersController < ApplicationController
 
   def discover
     @offers = Offer.first(10)
+    @tags = Tag.all
   end
 
   def claimed

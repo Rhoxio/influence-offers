@@ -8,7 +8,7 @@ const Discover = (props) => {
   return(
     <div className="discover-container">
       <h1>Discover Component</h1>
-      <DiscoverForm/>
+      <DiscoverForm tags={props.tags}/>
       <DiscoverList offers={props.offers}/>
     </div>
   )
