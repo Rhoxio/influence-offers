@@ -1,3 +1,4 @@
 <%= button_to "View Claimed Offers", claimed_offers_path, method: :get, class: "view-claimed" %>
+<h1> Discover Dashboard </h1>
 
 <%= react_component("Discover", props: {offers: @offers, tags: @tags}, prerender: false) %>

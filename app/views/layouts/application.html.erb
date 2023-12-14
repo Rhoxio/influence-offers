@@ -20,7 +20,9 @@
       </div>
       <div class="session-buttons">
         <% if player_signed_in? %>
-          <%= button_to "Sign Out", destroy_player_session_path, method: :delete  %>
+          <%= button_to "SIGN OUT", destroy_player_session_path, method: :delete, class: "sign-out"  %>
+        <% else %>
+          <%= button_to "SIGN IN", new_player_session_path, method: :get, class: "sign-in" %>
         <% end %>        
       </div>
     </header>

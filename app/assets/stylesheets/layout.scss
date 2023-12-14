@@ -7,9 +7,17 @@ body{
   font-family: "Poppins-Regular";
   background-color: $influence-green;
 
+  button{
+    &:hover{
+      opacity: 0.9;
+    }
+  }
+
   header{
     background-color: white;
     box-shadow: 0 4px 2px -2px gray;
+    display: flex;
+    justify-content: space-around;    
 
     .orange-text{
       color: $influence-orange;
@@ -32,11 +40,33 @@ body{
       }  
     }
 
-    // .session-buttons{
-    //   display: flex;
-    //   justify-content: space-evenly;
-    //   gap: 10px;
-    // }
+    .session-buttons{
+      // float:right;
+      margin-top: 10px;
+
+      button{
+        @include breakpoint(sm) {
+          border: none;
+          border-radius: 5px;
+          box-shadow: 0px 3px 6px -3px gray;
+          padding: 10px 20px;
+          font-size: 12px;
+          letter-spacing: 1px;
+        }        
+      }
+
+      .sign-in{
+        background-color: $influence-orange;
+        color: white
+      }   
+
+      .sign-out{
+        background-color: $influence-blue;
+        color: white
+      }   
+
+
+    }
 
   }
 
