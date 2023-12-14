@@ -1,6 +1,8 @@
 @import "breakpoints";
 @import "variables";
 
+$header-row-color: #c9c9c9;
+
 .discover-container{
   background-color: white;
   border-radius: 10px;
@@ -8,14 +10,52 @@
   .discover-title{
     font-size: 20px;
     text-align: center;
-    margin-top: 10px;
+    margin-top: 0;
     display: inline-block;
     width: 100%;
   }
 
   @include breakpoint(sm) {
-    margin: 0 5%;
-    padding: 0 5%;
+    margin: 10px 5%;
+    padding: 10px 5%;
+  }
+
+  .discover-form{
+    hr{
+      border-color: $header-row-color;
+    }
+
+    .suggest-button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-green;
+      color: white;      
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        width: 100%;
+        margin-top: 3px;
+      }
+    }
+
+    .filter-button{
+      border: none;
+      border-radius: 5px;
+      box-shadow: 0px 3px 6px -3px gray;
+      background-color: $influence-orange;
+      color: white;      
+
+      @include breakpoint(sm) {
+        padding: 14px 30px;
+        font-size: 18px;
+        letter-spacing: 1px;
+        width: 100%;
+        margin-top: 3px;
+      }
+    }     
   }
   
 
@@ -43,7 +83,7 @@
       }
 
       hr{
-        border-color: #c9c9c9;
+        border-color: $header-row-color;
         margin: 10px 0 10px; 
       }         
 
@@ -61,13 +101,13 @@
         }    
 
       }
+     
 
     .claim-button{
       border: none;
       border-radius: 5px;
       box-shadow: 0px 3px 6px -3px gray;
       background-color: $influence-blue;
-      border: none;
       color: white;  
 
       &:disabled{
