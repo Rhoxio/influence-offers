@@ -43,13 +43,17 @@ RSpec.configure do |config|
   # This will use the defaults of :js and :server_rendering meta tags
   ReactOnRails::TestHelper.configure_rspec_to_compile_assets(config)
 
+  # config.include Devise::TestHelpers, type: :controller
+  config.include Devise::Test::IntegrationHelpers, type: :request
+  config.include Warden::Test::Helpers, type: :request
+
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
   config.fixture_paths = [
     Rails.root.join('spec/fixtures')
   ]
 
-  config.before(:all) do
-    DatabaseCleaner.clean
+  config.before(:suite) do
+    DatabaseCleaner.clean_with(:truncation)
   end    
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your

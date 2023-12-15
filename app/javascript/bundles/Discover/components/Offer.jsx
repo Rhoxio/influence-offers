@@ -3,12 +3,38 @@ import React, { useState } from 'react';
 
 const Offer = ({offer, tags, show}) =>{
   // console.log(tags)
+  const unclaimedButtonData = {text: "Claim", disabled: false, claimed: false}
+  const claimedButtonData = {text: "Claimed!", disabled: true, claimed: true}
+  const pendingButtonData = {text: "Claiming...", disabled: true, claimed: false}
+  const [buttonState, setButtonState] = useState(unclaimedButtonData)
 
   const claimClickHandler = (event) =>{
     event.preventDefault()
     // console.log(event)
-    event.target.disabled = true
-    event.target.innerHTML = "Claimed!"
+    // event.target.disabled = true
+    // event.target.innerHTML = "Claimed!"
+    postClaimOffer()
+  }
+
+  const postClaimOffer = async () =>{
+    const location = `${window.location.protocol}//${window.location.host}`
+    const url = `${location}/api/v1/offers/${offer.id}/claim`
+    const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    console.log(url)
+    const body = {
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'X-CSRF-Token': csrf,
+      }
+    }
+    try {
+      const response = await fetch(url, body)
+      const data = await response.json();
+      return data
+    } catch(e) {
+      return e
+    }
   }
 
   if(show){
@@ -22,7 +48,14 @@ const Offer = ({offer, tags, show}) =>{
           ))}      
         </div>
         <hr/>
-        <button data-offer-id={offer.id} onClick={claimClickHandler} className="claim-button">Claim</button>
+        <button 
+          data-offer-id={offer.id} 
+          onClick={claimClickHandler} 
+          className="claim-button"
+          disabled={buttonState.disabled}
+        >
+          {buttonState.text}
+        </button>
 
       </div>
     )    
