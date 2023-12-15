@@ -1,2 +1,18 @@
-<%= button_to "Continue Discovering", discover_path, method: :get, class: "view-claimed" %>
-<h1> Claimed Page </h1>
+<%= button_to "Continue Discovering", discover_path, method: :get, class: "link-out" %>
+
+<div class="discover-container">
+  <h3 class="discover-title">Claimed Offers</h3>
+  <div class="offers-list">
+    <% @claimed_offers.each do |offer| %>
+      <%= react_component("Offer", 
+      props: {
+        showActions: false, 
+        show: true, 
+        offer: offer, 
+        tags: offer.tags,
+        key: "offer-#{offer.id}"
+      }, 
+      prerender: false) %>
+    <% end %>
+  </div>
+</div>

@@ -20,7 +20,7 @@ const DiscoverList = () => {
       <div className="offers-list">
         {
           activeOffers.map((collection, index) => (
-            <Offer setError={setError} show={collection.show} offer={collection.offer} tags={collection.tags} key={`offer-${collection.offer.id}`}/>
+            <Offer showActions={true} setError={setError} show={collection.show} offer={collection.offer} tags={collection.tags} key={`offer-${collection.offer.id}`}/>
           ))
         }
       </div>

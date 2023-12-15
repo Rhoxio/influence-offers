@@ -1,3 +1,3 @@
-<%= button_to "View Claimed Offers", claimed_offers_path, method: :get, class: "view-claimed" %>
+<%= button_to "View Claimed Offers", claimed_offers_path, method: :get, class: "link-out" %>
 
 <%= react_component("Discover", props: {offers: @offers, tags: @tags}, prerender: false) %>

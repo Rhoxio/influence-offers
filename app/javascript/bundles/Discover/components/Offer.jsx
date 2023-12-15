@@ -1,12 +1,18 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-const Offer = ({offer, tags, show, setError}) =>{
+const Offer = ({offer, tags, show, setError, showActions}) =>{
   // console.log(tags)
   const unclaimedButtonData = {text: "Claim", disabled: false, claimed: false}
   const claimedButtonData = {text: "Claimed!", disabled: true, claimed: true}
   const pendingButtonData = {text: "Claiming...", disabled: true, claimed: false}
   const [buttonState, setButtonState] = useState(unclaimedButtonData)
+
+  let buttonDisplay = {display: 'none'}
+  if(showActions){
+    buttonDisplay = {}
+  }
+
 
   const claimClickHandler = (event) => {
     event.preventDefault()
@@ -80,15 +86,18 @@ const Offer = ({offer, tags, show, setError}) =>{
             <span key={tag.slug} className="tag">{tag.name}</span> 
           ))}      
         </div>
-        <hr/>
-        <button 
-          data-offer-id={offer.id} 
-          onClick={claimClickHandler} 
-          className="claim-button"
-          disabled={buttonState.disabled}
-        >
-          {buttonState.text}
-        </button>
+
+        <div style={buttonDisplay}>
+          <hr/>
+          <button 
+            data-offer-id={offer.id} 
+            onClick={claimClickHandler} 
+            className="claim-button"
+            disabled={buttonState.disabled}
+          >
+            {buttonState.text}
+          </button>
+        </div>
 
       </div>
     )    
