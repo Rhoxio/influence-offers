@@ -3,6 +3,28 @@
 
 $header-row-color: #c9c9c9;
 
+.react-errors-container{
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: 99;
+  text-align: center;
+  background-color: $influence-red;
+  padding: 20px 0%;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+  // display: none;
+
+  .message{
+    margin:0;
+    padding: 0;
+  }
+
+  .close-me{
+    font-size: 10px;
+  }
+}
+
 .discover-container{
   background-color: white;
   border-radius: 10px;
