@@ -59,6 +59,7 @@ const DiscoverForm = ({setActiveOffers}) => {
 
   return(
     <form onSubmit={handleSubmit} className="discover-form">
+      <p>The more you claim, the better the suggestions!</p>
       <button className="suggest-button">Suggest!</button>
       <hr/>
       {/*<label htmlFor="discover_form">Search</label>*/}
