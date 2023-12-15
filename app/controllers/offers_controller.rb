@@ -7,5 +7,7 @@ class OffersController < ApplicationController
   end
 
   def claimed
+    @player = current_player
+    @claimed_offers = @player.offers
   end
 end
