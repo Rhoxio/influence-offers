@@ -10,6 +10,7 @@ body{
   button{
     &:hover{
       opacity: 0.9;
+      cursor: pointer;
     }
   }
 
@@ -17,7 +18,13 @@ body{
     background-color: white;
     box-shadow: 0 4px 2px -2px gray;
     display: flex;
-    justify-content: space-around;    
+    justify-content: space-around; 
+
+    @include breakpoint(lg) {
+
+      justify-content: space-between;
+      padding: 10px 10%;
+    }
 
     .orange-text{
       color: $influence-orange;
@@ -38,21 +45,34 @@ body{
         text-align: center;
         padding: 10px 0;
       }  
+      @include breakpoint(lg) {
+        font-size: 2.4rem;
+      }
     }
 
     .session-buttons{
       // float:right;
       margin-top: 10px;
+      @include breakpoint(lg) {
+        margin-top: 0;
+      }
 
       button{
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0px 3px 6px -3px gray;
+
         @include breakpoint(sm) {
-          border: none;
-          border-radius: 5px;
-          box-shadow: 0px 3px 6px -3px gray;
           padding: 10px 20px;
           font-size: 12px;
           letter-spacing: 1px;
-        }        
+        }    
+
+        @include breakpoint(lg) {
+          padding: 20px 30px;
+          font-size: 1.2rem;
+        }    
+
       }
 
       .sign-in{

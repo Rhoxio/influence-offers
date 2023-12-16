@@ -5,7 +5,10 @@
   background-color: $influence-green;
   @include breakpoint(sm) {
     padding: 20px 10%;
-    // height: 750px;
+  }
+
+  @include breakpoint(lg) {
+    margin: 120px 40%;
   }
 
   h2{
@@ -15,14 +18,22 @@
     @include breakpoint(sm) {
       margin-bottom: 20px;
     }
+    @include breakpoint(lg) {
+      margin-bottom: 15px;
+    }
   }
 
   .auth-form-container{
     background-color: white;
     border-radius: 10px;
     box-shadow: 0px 3px 6px -3px gray;
+
     @include breakpoint(sm) {
       padding: 10px 5%;
+    }
+
+    @include breakpoint(lg) {
+      padding: 20px 15%;
       margin-top: 150px; 
     }
 
@@ -40,12 +51,34 @@
     }
   }
 
-  .sign-up{
+  .sign-up-link{
     margin-top: 30px;
+
+    @include breakpoint(lg) {
+      margin-top: 20px;
+      width: 100%;
+      display: flex;
+      justify-content: center;        
+    }    
+  }
+
+  br{
+    @include breakpoint(lg) {
+      display: none;
+    }
   }
 
   .actions{
     margin-bottom: 10px;
+    @include breakpoint(lg) {
+      padding: 0 20%;
+    }
+
+    .sign-in-button{
+      &:hover{
+        cursor: pointer;
+      }
+    }
 
     input{
       border: none;
@@ -54,9 +87,15 @@
       background-color: $influence-orange;
       width: 100%;
       color: white;
+      padding: 14px 30px;
+
+      @include breakpoint(lg) {
+        padding: 14px 30px;
+        font-size: 1.3rem;
+        letter-spacing: 1px;
+      }
 
       @include breakpoint(sm) {
-        padding: 14px 30px;
         font-size: 18px;
         // letter-spacing: 1px;
       }
