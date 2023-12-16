@@ -16,6 +16,8 @@ class Player < ApplicationRecord
   has_many :claimed_offers, dependent: :destroy
   has_many :offers, through: :claimed_offers
 
+  # scope :claimed_offers, -> {joins(:claimed_offers).where('player_id = player.id')}
+
 
   # private
   # def ransackable_associations(auth_object = nil)

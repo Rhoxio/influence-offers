@@ -116,4 +116,53 @@ RSpec.describe Offer, type: :model do
     end    
   end
 
+  describe "scopes" do 
+    # Base age gen from factories is 35 with (30 min & 40 max)
+    before(:all) do 
+      4.times do 
+        FactoryBot.create(:new_offer)
+      end   
+
+      4.times do 
+        FactoryBot.create(:male_offer)
+      end         
+    end
+
+    context '#in_age_range' do 
+      it "will pull by age range" do 
+        offers = Offer.in_age_range(35)
+        offers.each do |offer|
+          expect(offer.min_age < 35).to eq(true)
+          expect(offer.max_age > 35).to eq(true)
+        end
+      end
+    end
+
+    context '#targeting' do 
+      it '#targeting will pull by gender' do 
+        female_offers = Offer.targeting("female")
+        expect(female_offers.length >= 4).to eq(true)
+      end
+
+      it '#targeting will pull by gender' do 
+        other_offers = Offer.not_targeting("female")
+        other_offers.each do |offer|
+          expect(offer.target_gender).to_not eq("female")  
+        end
+      end  
+    end 
+
+    context 'combinatory' do 
+      it "will pull by age range and gender when chained" do 
+        offers = Offer.targeting("female").in_age_range(35)
+        offers.each do |offer|
+          expect(offer.min_age < 35).to eq(true)
+          expect(offer.max_age > 35).to eq(true)
+          expect(offer.target_gender).to eq("female")
+        end
+      end
+    end
+
+  end
+
 end

@@ -17,6 +17,10 @@ class Offer < ApplicationRecord
   validates :target_gender, inclusion: {in: GENDERS, message: "Invalid gender specified"}  
 
   before_validation :assign_default_max_and_min
+  
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
+  # NEED TO ADD A BEFORE SAVE TO CHECK IF THE target_age is in between min and max!
+  # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 
   # Using dependent: :destroy to keep data cleaner in the scope of this app.
   has_many :claimed_offers, dependent: :destroy
@@ -24,6 +28,11 @@ class Offer < ApplicationRecord
 
   has_many :offer_tags, dependent: :destroy
   has_many :tags, through: :offer_tags
+
+  scope :targeting, ->(gender){ where(target_gender: gender)}
+  scope :not_targeting, ->(gender){ where("target_gender != ?", gender)}
+
+  scope :in_age_range, ->(age){where("min_age <= ? AND max_age >= ?", age, age)}
 
   private
 
