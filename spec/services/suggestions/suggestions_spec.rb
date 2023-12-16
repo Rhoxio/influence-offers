@@ -58,9 +58,8 @@ RSpec.describe "suggestions system" do
         # Claiming the similar offers...
         OfferClaimer.call(player: @player, offer: offer)
       end
-      # Have to call gen again because new stuff was added...
-      gen = SuggestionGenerator.new(@player)
 
+      gen = SuggestionGenerator.new(@player)
       first_tag_weight = gen.offer_weights.first.contribution[:tags]
       last_tag_weight = gen.offer_weights.last.contribution[:tags]
       expect(first_tag_weight > 2).to eq(true)
@@ -75,7 +74,7 @@ RSpec.describe "suggestions system" do
       end
     end
 
-    it "will weigh them evenly" do 
+    it "will weigh tags evenly" do 
       # Putting them all in - should / length and give 0 since they all match
       @offers.each do |offer|
         offer.tags = []
@@ -192,27 +191,63 @@ RSpec.describe "suggestions system" do
 
   end
 
-  # it "will sandbox" do 
-  #   # ap @player.offers
-  #   # ap @offers
-  #   # ap @player.claimed_offers
-  #   gen = SuggestionGenerator.new(@player)
-  #   # ap gen.tag_frequencies
-  #   # ap gen.min_max_tag_frequencies
-  #   # ap gen.offers_by_player_gender
-  #   # ap gen.offers_outside_of_player_gender
-  #   # ap gen.weight_struct
-  #   # ap gen.relevant_offers
-  #   # ap gen.claimed_offers
-  #   # gen.weigh_age_range
-  #   # gen.weigh_gender
-  #   # ap @player
-  #   # ap gen.offer_weights
+  describe "age weight" do 
+    before(:all) do 
+      Offer.destroy_all
+      Tag.destroy_all
 
-  #   # gen.weigh_tags
-    
-  #   gen.generate_weights
-  #   ap gen.offer_weights
-  # end
+      @player = FactoryBot.create(:new_player)
+      7.times {FactoryBot.create(:tag)}
+      @tags = Tag.all
+      @offers = [
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 35, target_gender: "female"),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 36, target_gender: "female"),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 33, target_gender: "female"),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 29, target_gender: "female"),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 40, target_gender: "female"),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 43, target_gender: "female")
+      ]
+
+      @offers.each do |offer|
+        offer.tags << @tags.shuffle.take(3)
+      end
+
+    end
+
+    it "will generate age weights" do 
+      gen = SuggestionGenerator.new(@player)
+      gen.offer_weights do |weight_set|
+        expect(weight_set.contribution[:age] > 0).to eq(true)
+      end
+    end
+
+    it "will assign 10 to exact matches" do 
+      gen = SuggestionGenerator.new(@player)
+      gen.offer_weights do |weight_set|
+        if (offer.target_age == @player.age)
+          expect(weight_set.contribution[:age]).to eq(10)
+        end
+      end      
+    end
+
+    it "will assign differences for different ratios" do 
+      gen = SuggestionGenerator.new(@player)
+      # Just one max away - should round to 9 since not exact
+      expect(gen.offer_weights[1].contribution[:age]).to eq(9)
+
+      # Over 1/10 away from mid on min (-2), should assign 8 after round
+      expect(gen.offer_weights[2].contribution[:age]).to eq(8)
+
+      # Farther away at almost half - Should round to 6 on min
+      expect(gen.offer_weights[3].contribution[:age]).to eq(6)
+
+      # 5 away, rounds to 6 after ratio on max
+      expect(gen.offer_weights[4].contribution[:age]).to eq(6)
+
+      # 8 away, rounds to 5 after matio at max
+      expect(gen.offer_weights[5].contribution[:age]).to eq(5)
+    end
+
+  end
 
 end

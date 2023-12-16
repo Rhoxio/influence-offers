@@ -74,6 +74,8 @@ class SuggestionGenerator < ApplicationService
   def calc_age_range_weight(offer)
     # Was going to do this in ternary, but it's super hard to read that way.
     # So I just laid it out...
+    # Can probably do this with .abs, but this solution
+    # is how I whiteboarded it and works well.
     age_diff = (@player.age - offer.target_age)
     side = age_diff > 0 ? :max : :min
     if side == :max
