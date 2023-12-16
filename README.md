@@ -26,16 +26,16 @@ Database:
 Postgresql
 
 Setup:
- - Install [Node](https://nodejs.org/en/download)
-  - You can check which node version you are running by running: `node -v` 
-  - More recent versions work just fine. My version is: `v18.16.0`
+ - Install [Node](https://nodejs.org/en/download)  
+   - You can check which node version you are running by running: `node -v` 
+   - More recent versions work just fine. My version is: `v18.16.0`
  - Clone the repo down using: `git clone git@github.com:Rhoxio/influence-offers.git`
  - run `cd influence_offers` to navigate into the project root.
  - Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
-  - `rvm` or `rbenv` commands might be required depending on your local environment
-  - [rvm docs](https://rvm.io/rvm/cli)
-  - [rbenv docs](https://github.com/rbenv/rbenv)
-  - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
+   - `rvm` or `rbenv` commands might be required depending on your local environment
+   - [rvm docs](https://rvm.io/rvm/cli)
+   - [rbenv docs](https://github.com/rbenv/rbenv)
+   - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
  - run `bundle install` to install gems/dependencies
  - run `rails db:setup` to prepare the database and run migrations
  - Check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
