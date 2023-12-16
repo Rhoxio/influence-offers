@@ -35,9 +35,14 @@ RSpec.describe "suggestions system" do
     # ap gen.weight_struct
     # ap gen.relevant_offers
     # ap gen.claimed_offers
-    gen.weigh_age_range
-    gen.weigh_gender
-    ap @player
+    # gen.weigh_age_range
+    # gen.weigh_gender
+    # ap @player
+    # ap gen.offer_weights
+
+    # gen.weigh_tags
+    
+    gen.generate_weights
     ap gen.offer_weights
   end
 

@@ -1,6 +1,6 @@
 class SuggestionGenerator < ApplicationService
 
-  attr_reader :tag_frequencies, :relevant_offers, :claimed_offers, :offer_weights
+  attr_reader :relevant_offers, :claimed_offers, :offer_weights
 
   def initialize(player)
     @player = player
@@ -10,18 +10,26 @@ class SuggestionGenerator < ApplicationService
     @offer_weights = build_weight_structs
   end
 
-  # As long as weight is above 0, show
-
   def build_weight_structs
     @relevant_offers.map do |offer| 
-      weight_struct = Struct.new(:offer, :weight)    
-      weight_struct.new(offer, 0)
+      weight_struct = Struct.new(:offer, :weight) 
+      # Adding in the total_claimed as the baseline
+      # weight, as it's a pretty actionable metric 
+      # overall and provides good baseline variance.
+      weight_struct.new(offer, offer.total_claimed)
     end
   end
 
-  # If tag is at tally max,           +++ score
-  # If tag is in between max and min, ++  score
-  # if tag is at count min,           +   score
+  def generate_weights
+    @offer_weights.each do |pair|
+      weigh_tag(pair)
+      weigh_gender(pair)
+      weigh_age_range(pair)
+    end
+    @offer_weights = @offer_weights.sort_by do |pair|
+      -pair.weight
+    end
+  end
 
   def generate_tag_frequencies
     tallied_tags = @claimed_offers.map do |offer|
@@ -29,31 +37,21 @@ class SuggestionGenerator < ApplicationService
     end.flatten.map(&:id).tally
   end
 
-  def min_max_tag_frequencies
-    maxes = @tag_frequencies.max_by{|k,v| v}
-    mins = @tag_frequencies.min_by{|k,v| v}
-    return {
-      max: {
-        id: maxes[0],
-        count: maxes[1]
-      },
-      min: {
-        id: mins[0],
-        count: mins[1]
-      }
-    }
+  def weigh_tag(pair)
+    offer = pair.offer
+    offer.tags.each do |tag|
+      pair.weight += (@tag_frequencies[tag.id] / offer.tags.length)
+    end
   end
 
   def gender_weighted?
     ['male', 'female'].include?(@player.gender)
   end
 
-  def weigh_gender
-    @offer_weights.each do |pair|
-      offer = pair.offer
-      if gender_weighted?
-        pair.weight += 10 if offer.target_gender == @player.gender
-      end
+  def weigh_gender(pair)
+    offer = pair.offer
+    if gender_weighted?
+      pair.weight += 10 if offer.target_gender == @player.gender
     end
   end
 
@@ -83,17 +81,14 @@ class SuggestionGenerator < ApplicationService
     return weight
   end
 
-  def weigh_age_range
-    @offer_weights.each do |pair|
-      offer = pair.offer
-      if offer.target_age == @player.age
-        pair.weight += 10
-        next
-      elsif (offer.min_age < @player.age) && (offer.max_age > @player.age)
-        pair.weight += calc_age_range_weight(offer)
-        next
-      end
-
+  def weigh_age_range(pair)
+    offer = pair.offer
+    if offer.target_age == @player.age
+      pair.weight += 10
+      return
+    elsif (offer.min_age < @player.age) && (offer.max_age > @player.age)
+      pair.weight += calc_age_range_weight(offer)
+      return 
     end
   end
 
