@@ -15,7 +15,7 @@ const DiscoverList = () => {
     <>
     <ErrorDisplay error={error} setError={setError}/>
     <div className="discover-container">
-      <h3 className="discover-title">Discover Offers</h3>
+      <h3 className="discover-title">Discover <span className="orange-text">Offers</span></h3>
       <DiscoverForm setActiveOffers={setActiveOffers}/>
       <div className="offers-list">
         {

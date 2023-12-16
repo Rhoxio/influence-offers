@@ -3,6 +3,10 @@
 
 $header-row-color: #c9c9c9;
 
+.orange-text{
+  color: $influence-orange;
+}
+
 .link-out{
   background-color: $influence-blue;
   border-radius: 3px;
@@ -10,6 +14,13 @@ $header-row-color: #c9c9c9;
   border-radius: 5px;
   box-shadow: 0px 3px 6px -3px black; 
   color: white; 
+  @include breakpoint(lg) {
+    width: 10%;
+    padding: 14px 0;
+    margin-top: 10px;
+    font-size: 1.1rem;
+    margin-left: 25%;
+  }
   @include breakpoint(sm) {
     margin-left: 5%;
     padding: 5px 16px;
@@ -44,25 +55,49 @@ $header-row-color: #c9c9c9;
   background-color: white;
   border-radius: 10px;
 
+  @include breakpoint(lg) {
+    margin: 0 25%;
+    padding: 20px 2%;
+    margin-top: 10px;
+  }
+
+  @include breakpoint(sm) {
+    margin: 10px 5%;
+    padding: 10px 5%;
+  }  
+
   .discover-title{
     font-size: 20px;
     text-align: center;
     margin-top: 0;
     display: inline-block;
     width: 100%;
-  }
 
-  @include breakpoint(sm) {
-    margin: 10px 5%;
-    padding: 10px 5%;
+    @include breakpoint(lg) {
+      font-size: 2.4rem;
+    }
   }
 
   .discover-form{
+    @include breakpoint(lg) {
+      margin-bottom: 10px;      
+    }
+        
     p{
       margin: 0;
       padding: 0;
       font-size: 10px;
       text-align: center;
+      @include breakpoint(lg) {
+        font-size: 1.3rem;
+      }
+    }
+
+    .filter-tags{
+      @include breakpoint(lg) {
+        width: 20%;
+        margin-left: 80%;
+      }
     }
 
     hr{
@@ -74,7 +109,16 @@ $header-row-color: #c9c9c9;
       border-radius: 5px;
       box-shadow: 0px 3px 6px -3px gray;
       background-color: $influence-green;
-      color: white;      
+      color: white;  
+
+      @include breakpoint(lg) {
+        width: 30%;
+        padding: 14px 0;
+        margin-top: 5px;
+        font-size: 1.5rem;
+        margin-left: 35%;
+        margin-bottom: 10px;
+      }          
 
       @include breakpoint(sm) {
         padding: 14px 30px;
@@ -92,6 +136,14 @@ $header-row-color: #c9c9c9;
       background-color: $influence-orange;
       color: white;      
 
+      @include breakpoint(lg) {
+        width: 20%;
+        margin-left: 80%;
+        padding: 14px 0;
+        margin-top: 5px;
+        font-size: 1.2rem;
+      }
+
       @include breakpoint(sm) {
         padding: 14px 30px;
         font-size: 18px;
@@ -106,8 +158,11 @@ $header-row-color: #c9c9c9;
   .offers-list{
     display: grid;
     padding-top: 10px;
-    @include breakpoint(sm) {
-
+    @include breakpoint(lg) {
+      grid-template-columns: auto auto auto;
+      gap: 0.6rem;
+      // height: 700px;
+      // overflow: scroll;
     }
 
     .offer{
@@ -124,6 +179,10 @@ $header-row-color: #c9c9c9;
 
       .offer-description{
         font-size: 12px;
+        @include breakpoint(lg) {
+          height: 8rem;  
+        }
+        
       }
 
       hr{
@@ -133,6 +192,10 @@ $header-row-color: #c9c9c9;
 
       .tag-container{
         display: inline-block;
+        @include breakpoint(lg) {
+          // height: 70px;
+          margin-top: 10px;
+        }
         // white-space: nowrap;
         // overflow: auto;
         .tag{
@@ -142,6 +205,11 @@ $header-row-color: #c9c9c9;
           margin-right: 3px;
           display: inline-block;
           border-radius: 3px;
+          @include breakpoint(lg) {
+            font-size: 0.8rem;
+            padding: 8px 10px;
+            margin-bottom: 3px;
+          }
         }    
 
       }
@@ -153,6 +221,12 @@ $header-row-color: #c9c9c9;
       box-shadow: 0px 3px 6px -3px gray;
       background-color: $influence-blue;
       color: white;  
+      @include breakpoint(lg) {
+        width: 100%;
+        padding: 15px 0;
+        font-size: 1.2rem;
+        letter-spacing: 1px;
+      }
 
       &:disabled{
         background-color: grey;

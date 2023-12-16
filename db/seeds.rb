@@ -9,12 +9,23 @@ def random_tags(count)
   return []
 end
 
+def random_description
+  [
+    "Dive into the world of exclusive perks! Earn Premium Currency by completing exciting challenges and quests. Use your newfound wealth to unlock rare items, customize your gameplay, and dominate the leaderboards. It's time to elevate your gaming experience with the ultimate Premium Currency Extravaganza!",
+    "Your skills deserve recognition! Get ready to earn Cash for Play by showcasing your gaming prowess. Whether it's achieving high scores, completing difficult levels, or outsmarting opponents, each triumph brings you closer to cold, hard cash rewards. Turn your gameplay into a rewarding adventure with Cash for Play Bonanza!",
+    "Calling all gaming enthusiasts! Invite your friends to join the gaming revolution and claim Referral Rewards together. Unlock bonus features, exclusive content, and epic loot by expanding your gaming circle. The more friends you refer, the greater the rewards for everyone. Embark on the Referral Rewards Revolution today!",
+    "Enjoy the freedom to play without limits! Immerse yourself in the Free Play Time Fiesta, where your dedication to the game is rewarded with extra playtime. Engage in thrilling quests, conquer challenges, and extend your gameplay hours. Embrace the joy of gaming with the Free Play Time Fiesta!",
+    "Unleash the potential of your gaming journey! Conquer in-game challenges and bask in the glory of the In-Game Reward Extravaganza. Collect exclusive items, power-ups, and boosts that amplify your gameplay. Your victories pave the way for unparalleled in-game riches. Join the In-Game Reward Extravaganza and let the spoils of victory be yours!",
+    "Be a pioneer in the gaming evolution! Embark on an exciting App Testing Adventure where you get an exclusive sneak peek into upcoming features and content. Test new mechanics, provide feedback, and shape the future of the game. As a tester, you're not just playing — you're influencing the gaming landscape. Start your App Testing Adventure now!"
+  ].sample
+end
+
 def generate_offer(age_range, gender)
   target_age = age_range.sample
   offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map(&:capitalize).join(" ")
   offer_data = {
     title: offer_name,
-    description: Faker::Marketing.buzzwords,
+    description: random_description,
     target_age: target_age,
     target_gender: gender,
     max_age: target_age + ((3..6).to_a.sample),
@@ -32,7 +43,7 @@ if Rails.env.development?
   puts bar
 
   puts "Creating Tags...".blue
-  tag_names = ["Premium Currency", "Cash for Play", "Referral", "Free Play Time", "In-Game Reward", "App Testing"]
+  tag_names = ["Currency", "Cash", "Referral", "Play Time", "Limited", "Testing"]
   tag_names.each do |tag_name|
     if !Tag.where(name: tag_name).present?
       Tag.create!(name: tag_name) 

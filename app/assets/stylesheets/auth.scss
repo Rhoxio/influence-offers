@@ -80,6 +80,12 @@
       }
     }
 
+    .sign-up-button{
+      &:hover{
+        cursor: pointer;
+      }
+    }    
+
     input{
       border: none;
       border-radius: 5px;
