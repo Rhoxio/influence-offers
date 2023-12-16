@@ -2,7 +2,14 @@ class OffersController < ApplicationController
   before_action :authenticate_player!
 
   def discover
-    @offers = Offer.preload(:tags).first(100).map {|offer| {offer: offer, tags: offer.tags.sort_by(&:name), show: true}}
+    if current_player.offers.length == 0
+      @offers = OffersFormatter.from_base(Offer.preload(:tags).first(100))
+    else
+      suggestions = SuggestionGenerator.new(current_player).suggestions
+      @offers = OffersFormatter.from_suggestions(suggestions)
+    end
+    # @offers = Offer.preload(:tags).first(100).map {|offer| {offer: offer, tags: offer.tags.sort_by(&:name), show: true}}
+
     @tags = Tag.all
   end
 

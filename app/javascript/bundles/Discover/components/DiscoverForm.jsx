@@ -35,6 +35,10 @@ const DiscoverForm = ({setActiveOffers}) => {
     } 
   }
 
+  function refreshPage() {
+    window.location.reload(false);
+  }  
+
   const handleTagFilterChange = (event) => {
     const newOffersData = []
     const selectedTags = []
@@ -60,7 +64,7 @@ const DiscoverForm = ({setActiveOffers}) => {
   return(
     <form onSubmit={handleSubmit} className="discover-form">
       <p>The more you claim, the better the suggestions!</p>
-      <button className="suggest-button">Suggest!</button>
+      <button onClick={refreshPage} className="suggest-button">Suggest!</button>
       <hr/>
       {/*<label htmlFor="discover_form">Search</label>*/}
       {/*<input type="text" id="discover_form"/>*/}

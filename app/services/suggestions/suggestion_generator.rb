@@ -2,11 +2,13 @@ class SuggestionGenerator < ApplicationService
 
   attr_reader :relevant_offers, :claimed_offers, :offer_weights
 
+  alias_method :suggestions, :offer_weights
+
   def initialize(player)
     @player = player
-    @claimed_offers = player.offers
+    @claimed_offers = player.offers.includes(:tags)
     @tag_frequencies = generate_tag_frequencies
-    @relevant_offers = Offer.all - @claimed_offers
+    @relevant_offers = Offer.all.preload(:tags) - @claimed_offers
     @offer_weights = build_weight_structs
 
     generate_weights
