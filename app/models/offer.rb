@@ -6,7 +6,7 @@ class Offer < ApplicationRecord
   validates :title, presence: true
   validates :title, length: {maximum: 80}
 
-  validates :description, length: {maximum: 360}
+  validates :description, length: {maximum: 400}
 
   validates :target_age, presence: true
   validates :target_age, numericality: {in: AGE_BOUNDS}

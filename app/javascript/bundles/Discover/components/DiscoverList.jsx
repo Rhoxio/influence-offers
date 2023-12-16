@@ -15,13 +15,17 @@ const DiscoverList = () => {
     <>
     <ErrorDisplay error={error} setError={setError}/>
     <div className="discover-container">
-      <h3 className="discover-title">Discover Offers</h3>
+      <h3 className="discover-title">Discover <span className="orange-text">Offers</span></h3>
       <DiscoverForm setActiveOffers={setActiveOffers}/>
       <div className="offers-list">
-        {
-          activeOffers.map((collection, index) => (
+        { 
+          activeOffers.length > 0 && activeOffers.map((collection, index) => (
             <Offer showActions={true} setError={setError} show={collection.show} offer={collection.offer} tags={collection.tags} key={`offer-${collection.offer.id}`}/>
-          ))
+          ))          
+        }
+        {
+          activeOffers.length === 0 && 
+          <p className="no-offers">It looks like no offers are avilable!</p>
         }
       </div>
     </div>
@@ -30,3 +34,4 @@ const DiscoverList = () => {
 }
 
 export default DiscoverList;
+

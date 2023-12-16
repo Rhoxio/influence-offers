@@ -74,6 +74,7 @@ const DiscoverForm = ({setActiveOffers}) => {
         options={formOptions}
         isMulti={true}
         placeholder={"Filter by Tag"}
+        className="filter-tags"
       />
       <button className="filter-button" onClick={handleFilterClick}>Filter</button>
     </form>

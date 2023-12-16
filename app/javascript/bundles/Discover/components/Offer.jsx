@@ -13,7 +13,6 @@ const Offer = ({offer, tags, show, setError, showActions}) =>{
     buttonDisplay = {}
   }
 
-
   const claimClickHandler = (event) => {
     event.preventDefault()
     const response = postClaimOffer()
@@ -72,6 +71,7 @@ const Offer = ({offer, tags, show, setError, showActions}) =>{
       const data = await response.json();
       return data
     } catch (error) {
+      setError(error.message)
       return error
     }
   }
