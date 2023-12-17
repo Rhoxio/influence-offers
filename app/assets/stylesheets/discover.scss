@@ -166,7 +166,8 @@ $header-row-color: #c9c9c9;
     display: grid;
     padding-top: 10px;
     @include breakpoint(lg) {
-      grid-template-columns: auto auto auto;
+      grid-auto-rows: 1fr;
+      grid-template-columns: 1fr 1fr 1fr;
       gap: 0.6rem;
       // height: 700px;
       // overflow: scroll;
@@ -236,7 +237,7 @@ $header-row-color: #c9c9c9;
       }
 
       &:disabled{
-        background-color: grey;
+        background-color: #8080808f;
       }    
 
       @include breakpoint(sm) {
@@ -249,6 +250,9 @@ $header-row-color: #c9c9c9;
 
     .delete-button{
       background-color: $influence-red !important;
+      &:disabled{
+        background-color: #e6626499 !important;
+      }
     }   
 
 

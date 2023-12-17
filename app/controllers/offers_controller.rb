@@ -15,6 +15,7 @@ class OffersController < ApplicationController
 
   def claimed
     @player = current_player
-    @claimed_offers = @player.offers
+    @claimed_offers = OffersFormatter.from_base(@player.offers)
+    @tags = Tag.all
   end
 end

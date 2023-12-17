@@ -1,8 +1,11 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DiscoverContext } from './DiscoverContext'
 
-const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
-  console.log(actionSet)
+const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
+  const offersData = useContext(DiscoverContext)
+  const actionSet = offersData.actionSet
+
   const unclaimedButtonData = {text: "Claim", disabled: false }
   const claimedButtonData = {text: "Claimed!", disabled: true}
   const pendingButtonData = {text: "Claiming...", disabled: true }
@@ -14,9 +17,12 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
   const [buttonState, setButtonState] = useState(unclaimedButtonData)
   const [deleteButtonState, setDeleteButtonState] = useState(deleteButtonData)
 
-   const logSuggestionData = () =>{
-    console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
-    console.log({...suggestionMetrics, offer: offer})
+  // Log Util
+  const logSuggestionData = () =>{
+    if(suggestionMetrics.total_weight > 0){
+      console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
+      console.log({...suggestionMetrics, offer: offer})      
+    }
   }
 
   // CLAIM
@@ -87,7 +93,7 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
 
   const deleteClickHandler = (event) =>{
     event.preventDefault()
-    const response = postClaimOffer()
+    const response = deleteClaimOffer()
     response.then((res) => (
       handleDeleteClaimResponse(res)
     ))    
@@ -98,12 +104,13 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
     const url = `${location}/api/v1/offers/${offer.id}/unclaim`
     const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
     const body = {
-      method: "POST",
+      method: "DELETE",
       headers: {
         'X-CSRF-Token': csrf
       }
     }
     try{
+      const response = await fetch(url, body)
       delegateDeleteButtonState("pending")
       const data = await response
       return data
@@ -126,23 +133,22 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
   const handleDeleteClaimResponse = (res) =>{
     if(res.status){
       switch(res.status){
-        case '409':
-          setError('You have already claimed this offer.')
+        case 204:
+          delegateDeleteButtonState("done")
+          return res
+        case 400:
+          setError("Offer was not found. Refresh the page and try again.")
           delegateDeleteButtonState("initial")
-          break;
-        case '401':
+
+        case 401:
           setError('Sign in again to continue.')
           delegateDeleteButtonState("initial")
-          break;
-        case '403':
-          setError('An error has occured. Refresh the page and try again.')
-          delegateDeleteButtonState("initial")
-          break;
         default:
           setError(res.message)
+          delegateDeleteButtonState("initial")
       }
     } else {
-      delegateDeleteButtonState("done")
+      delegateDeleteButtonState("initial")
       return res
     }
   }  
@@ -158,33 +164,33 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics, actionSet}) =>{
           ))}      
         </div>
 
-      { actionSet === 'claim' && 
-        <div>
-          <hr/>
-          <button 
-            data-offer-id={offer.id} 
-            onClick={claimClickHandler} 
-            className="claim-button"
-            disabled={buttonState.disabled}
-          >
-            {buttonState.text}
-          </button>
-        </div>
-      }
+        { actionSet === 'claim' && 
+          <div>
+            <hr/>
+            <button 
+              data-offer-id={offer.id} 
+              onClick={claimClickHandler} 
+              className="claim-button"
+              disabled={buttonState.disabled}
+            >
+              {buttonState.text}
+            </button>
+          </div>
+        }
 
-      { actionSet === 'unclaim' && 
-        <div>
-          <hr/>
-          <button 
-            data-offer-id={offer.id} 
-            onClick={deleteClickHandler} 
-            className="claim-button delete-button"
-            disabled={deleteButtonState.disabled}
-          >
-            {deleteButtonState.text}
-          </button>
-        </div>
-      }      
+        { actionSet === 'unclaim' && 
+          <div>
+            <hr/>
+            <button 
+              data-offer-id={offer.id} 
+              onClick={deleteClickHandler} 
+              className="claim-button delete-button"
+              disabled={deleteButtonState.disabled}
+            >
+              {deleteButtonState.text}
+            </button>
+          </div>
+        }      
 
       </div>
     )    
