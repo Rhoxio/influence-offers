@@ -1,6 +1,6 @@
 # Influence Offers
 
-This is an app built to allow Players to find Offers on mobile games
+This is an app built to allow Players to find Offers on mobile games. It features a weighted suggestion system based on previous offers the Player has claimed as well as some base weights for Player age and gender.
 
 Ruby Version: `3.1.2`  
 Rails Version: `7.1.2`
@@ -23,13 +23,13 @@ Gems:
 
 
 Database:  
-Postgresql
+`Postgresql`
 
 ### Setup:
  - Install [Node](https://nodejs.org/en/download)  
    - You can check which node version you are running by running: `node -v` 
    - More recent versions work just fine. My version is: `v18.16.0`
-   - If you had to install Node, you'll need to reload your `.bash_profile` (or whatever you're using to load `PATH` variables or reopen the shell.
+   - If you had to install Node, you'll need to reload your `.bash_profile` (or whatever you're using to load `PATH` variables) or reopen the shell.
  - Clone the repo down using: `git clone git@github.com:Rhoxio/influence-offers.git`
  - run `cd influence_offers` to navigate into the project root.
  - Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
@@ -38,14 +38,14 @@ Postgresql
    - [rbenv docs](https://github.com/rbenv/rbenv)
    - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
  - run `bundle install` to install gems/dependencies
- - run `rails db:setup` to prepare the database and run migrations
-   - This should create the database, migrate, and seed the data.
  - Double-check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
    - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.
  - run `yarn` to install JS dependencies
  - add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
    - You can use `export EXECJS_RUNTIME=Node` temporarily unless you want to edit your shell/bash/zsh profile. Just be aware that if you open a new window, this will be un-set.
-   - I noticed that my environment didn't seem to care if I had this set or not, but yours might. 
+   - I noticed that my environment didn't seem to care if I had this set or not, but yours might.
+ - run `rails db:setup` to prepare the database and run migrations
+   - This should create the database, migrate, and seed the data. 
  - run `./bin/dev` to start the server with Shakapacker (This runs a `rails s` command - you'll see the output for both Shakapacker and Rails)
  - navigate to `http://localhost:3000` in your browser to begin using the app
 
