@@ -16,10 +16,10 @@ $header-row-color: #c9c9c9;
   color: white; 
   @include breakpoint(lg) {
     width: 10%;
-    padding: 14px 0;
+    padding: 14px 5px;
     margin-top: 10px;
     font-size: 1.1rem;
-    margin-left: 25%;
+    margin-left: 20%;
   }
   @include breakpoint(sm) {
     margin-left: 5%;
@@ -56,7 +56,7 @@ $header-row-color: #c9c9c9;
   border-radius: 10px;
 
   @include breakpoint(lg) {
-    margin: 0 25%;
+    margin: 0 20%;
     padding: 20px 2%;
     margin-top: 10px;
   }
@@ -188,7 +188,10 @@ $header-row-color: #c9c9c9;
       .offer-description{
         font-size: 12px;
         @include breakpoint(lg) {
-          height: 8rem;  
+          height: 8rem;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          // display: inline-block;  
         }
         
       }
