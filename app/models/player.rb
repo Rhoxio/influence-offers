@@ -19,6 +19,7 @@ class Player < ApplicationRecord
   has_many :offers, through: :claimed_offers
 
   # private
+
   # def ransackable_associations(auth_object = nil)
   #   []
   # end         

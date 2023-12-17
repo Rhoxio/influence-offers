@@ -2,7 +2,6 @@ def generate_age_range
   (30..35).to_a.sample
 end
 
-
 FactoryBot.define do
 
   factory :tag do

@@ -34,4 +34,19 @@ class Offer < ApplicationRecord
   scope :in_age_range, ->(age){where("min_age <= ? AND max_age >= ?", age, age)}
 
 
+  # I originally went with a counted version that used before_save/incrementors to store the count in a column
+  # I opted against that because it wasn't strictly required for performance purposes and
+  # was making the Player and Offer callback bloat too much to bear for such simple functionality.
+  # If the app was larger, I would have architecture set up to make sure that the counts get updated
+  # and stored using a sidekiq task or callbacks - depends on request throughput, read vs write, and importance
+  # of real-time data versus cached or estimated data.
+
+  # Keeping it simple seemed to just be a better idea here. Response times are fine in the 'suggestion'
+  # feature code, and worst-case I could write a query to make it faster. Going with the simple utility of
+  # a query method for the moment, though. 
+  def total_claimed
+    self.players.count
+  end
+
+
 end
