@@ -8,7 +8,6 @@ class OffersController < ApplicationController
       suggestions = SuggestionGenerator.new(current_player).suggestions
       @offers = OffersFormatter.from_suggestions(suggestions)
     end
-    # @offers = Offer.preload(:tags).first(100).map {|offer| {offer: offer, tags: offer.tags.sort_by(&:name), show: true}}
     @player = current_player
     @tags = Tag.all
   end
