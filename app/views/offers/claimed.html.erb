@@ -10,7 +10,8 @@
         show: true, 
         offer: offer, 
         tags: offer.tags,
-        key: "offer-#{offer.id}"
+        key: "offer-#{offer.id}",
+        suggestionMetrics: {title: offer.title}
       }, 
       prerender: false) %>
     <% end %>

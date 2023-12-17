@@ -16,11 +16,19 @@ const DiscoverList = () => {
     <ErrorDisplay error={error} setError={setError}/>
     <div className="discover-container">
       <h3 className="discover-title">Discover <span className="orange-text">Offers</span></h3>
-      <DiscoverForm setActiveOffers={setActiveOffers}/>
+      <DiscoverForm setError={setError} setActiveOffers={setActiveOffers}/>
       <div className="offers-list">
         { 
           activeOffers.length > 0 && activeOffers.map((collection, index) => (
-            <Offer showActions={true} setError={setError} show={collection.show} offer={collection.offer} tags={collection.tags} key={`offer-${collection.offer.id}`}/>
+            <Offer 
+              showActions={true} 
+              setError={setError} 
+              show={collection.show} 
+              offer={collection.offer} 
+              tags={collection.tags} 
+              suggestionMetrics={{...collection.contribution, total_weight: collection.weight, title: collection.offer.title}} 
+              key={`offer-${collection.offer.id}`}
+            />
           ))          
         }
         {

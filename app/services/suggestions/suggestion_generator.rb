@@ -53,7 +53,7 @@ class SuggestionGenerator < ApplicationService
     offer = weight_data.offer
     offer.tags.each do |tag|
       if @tag_frequencies.key?(tag.id)
-        total_weight = (@tag_frequencies[tag.id] / offer.tags.length)
+        total_weight = ((@tag_frequencies[tag.id] / offer.tags.length) * 0.5).round
         weight_data.contribution[:tags] += total_weight
         weight_data.weight += total_weight
       end
