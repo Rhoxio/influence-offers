@@ -18,14 +18,13 @@ ActiveAdmin.register Player do
   
 
   form do |f|
-    available_offers = player.offers.length > 0 ? (Offer.all - player.offers) : Offer.all
     f.semantic_errors
     f.inputs do
       f.input :email
       f.input :age
       f.input :gender, :as => :select, collection: Player::GENDERS, input_html: {style:'width:40%'}
 
-      f.input :offers, :as => :select, collection: available_offers, input_html: {style:'width:40%; height: 200px;'}
+      f.input :offers, :as => :select, collection: Offer.all, input_html: {style:'width:40%; height: 200px;'}
     end
     
     f.actions
