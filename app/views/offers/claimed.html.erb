@@ -6,12 +6,12 @@
     <% @claimed_offers.each do |offer| %>
       <%= react_component("Offer", 
       props: {
-        showActions: false, 
         show: true, 
         offer: offer, 
         tags: offer.tags,
         key: "offer-#{offer.id}",
-        suggestionMetrics: {title: offer.title}
+        suggestionMetrics: {title: offer.title},
+        actionSet: 'unclaim'
       }, 
       prerender: false) %>
     <% end %>

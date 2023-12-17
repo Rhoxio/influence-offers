@@ -245,7 +245,11 @@ $header-row-color: #c9c9c9;
         letter-spacing: 1px;
         width: 100%;
       }
-    }      
+    }   
+
+    .delete-button{
+      background-color: $influence-red !important;
+    }   
 
 
     }

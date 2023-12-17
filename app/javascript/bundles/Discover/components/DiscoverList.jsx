@@ -21,7 +21,7 @@ const DiscoverList = () => {
         { 
           activeOffers.length > 0 && activeOffers.map((collection, index) => (
             <Offer 
-              showActions={true} 
+              actionSet='claim'
               setError={setError} 
               show={collection.show} 
               offer={collection.offer} 

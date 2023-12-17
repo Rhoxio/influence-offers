@@ -1,5 +1,5 @@
 class Api::V1::OffersController < ApplicationApiController
-  protect_from_forgery only: [:claim]
+  protect_from_forgery only: [:claim, :unclaim]
 
   def claim
     return respond_with_error('unauthorized', nil, "Please log in to continue.") if !player_signed_in?
