@@ -1,6 +1,6 @@
 class SuggestionGenerator < ApplicationService
 
-  attr_reader :relevant_offers, :claimed_offers, :offer_weights
+  attr_reader :offer_weights
 
   alias_method :suggestions, :offer_weights
 
@@ -13,6 +13,8 @@ class SuggestionGenerator < ApplicationService
 
     generate_weights
   end
+
+  private
 
   # SETUP & TOTAL CLAIMED OFFERS
   def build_weight_structs
@@ -53,7 +55,7 @@ class SuggestionGenerator < ApplicationService
     offer = weight_data.offer
     offer.tags.each do |tag|
       if @tag_frequencies.key?(tag.id)
-        total_weight = (@tag_frequencies[tag.id] / offer.tags.length)
+        total_weight = ((@tag_frequencies[tag.id] / offer.tags.length) * 0.5).round
         weight_data.contribution[:tags] += total_weight
         weight_data.weight += total_weight
       end
@@ -74,8 +76,6 @@ class SuggestionGenerator < ApplicationService
 
   # AGE
   def calc_age_range_weight(offer)
-    # Was going to do this in ternary, but it's super hard to read that way.
-    # So I just laid it out...
     # Can probably do this with .abs, but this solution
     # is how I whiteboarded it and works well.
     age_diff = (@player.age - offer.target_age)
@@ -96,8 +96,8 @@ class SuggestionGenerator < ApplicationService
       seed = (inner_diff.to_f / total_range.to_f) # 0.6
     end
 
-    score = (1 - seed)
-    weight = (score * 10).floor
+    score = (1 - seed) # grabs inverse diff, max: .8, min: .4
+    weight = (score * 10).floor # makes it into a whole number < 10
     return weight
   end
 

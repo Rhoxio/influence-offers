@@ -20,39 +20,6 @@ RSpec.describe Offer, type: :model do
     it {should have_many(:tags)}
   end
 
-  describe "before_validation" do 
-
-    before(:each) do 
-      # If no min_age or max_age - should call #assign_default_max_and_min on validation
-      @offer = Offer.new(title: "Incomplete Offer", description:"Incomplete", target_age: 30)
-    end
-
-    context "ranges" do 
-      it "will assign a default max_age" do 
-        @offer.save
-        expect(@offer.max_age).to eq(@offer.target_age + 1)
-      end
-
-      it "will assign a default min_age" do 
-        @offer.save
-        expect(@offer.min_age).to eq(@offer.target_age - 1)        
-      end  
-
-      context 'defaults with #assign_default_max_and_min' do 
-        it "will not assign max_age if out of range" do 
-          @offer.target_age = 125
-          expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
-        end  
-
-        it "will not assign min_age if out of range" do 
-          @offer.target_age = 1
-          expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
-        end           
-      end
-     
-    end 
-  end  
-
   describe 'validations' do 
     it { should validate_presence_of(:title) }
     it { should validate_presence_of(:target_age) }
@@ -60,8 +27,13 @@ RSpec.describe Offer, type: :model do
     it { should validate_length_of(:title) }
     it { should validate_length_of(:description) }
     
+    it { should validate_presence_of(:target_age) }
     it { should validate_numericality_of(:target_age) }
+
+    it { should validate_presence_of(:max_age) }
     it { should validate_numericality_of(:max_age) }
+
+    it { should validate_presence_of(:min_age) }
     it { should validate_numericality_of(:min_age) }
 
     before(:each) do 

@@ -12,12 +12,11 @@ class Player < ApplicationRecord
   validates :age, presence: true
   validates :age, numericality: {in: AGE_RANGE}
 
-  # Using dependent: :destroy to keep data cleaner for this situation.
+  # Using dependent: :destroy to keep data cleaner in the scope of this app.
+  # Might leave this in for metrics in larger apps (or add soft delete or something), 
+  # but we aren't running metrics here and it makes dealing with the data far easier.  
   has_many :claimed_offers, dependent: :destroy
   has_many :offers, through: :claimed_offers
-
-  # scope :claimed_offers, -> {joins(:claimed_offers).where('player_id = player.id')}
-
 
   # private
   # def ransackable_associations(auth_object = nil)

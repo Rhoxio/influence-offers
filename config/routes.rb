@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   namespace :api do 
     namespace :v1 do 
       post "offers/:id/claim", to: 'offers#claim', as: :offer_claim
+      get "suggestions/:player_id", to: 'suggestions#suggest', as: :player_offers_suggestions
     end
   end
 

@@ -44,8 +44,8 @@ RSpec.describe "suggestions system" do
 
     it "will generate an applicable weight" do 
       gen = SuggestionGenerator.new(@player)
-      first_tag_weight = gen.offer_weights.first.contribution[:tags]
-      last_tag_weight = gen.offer_weights.last.contribution[:tags]
+      first_tag_weight = gen.suggestions.first.contribution[:tags]
+      last_tag_weight = gen.suggestions.last.contribution[:tags]
       expect(first_tag_weight).to eq(2)
       expect(last_tag_weight).to eq(1)
       expect(first_tag_weight > last_tag_weight).to eq(true)
@@ -60,8 +60,8 @@ RSpec.describe "suggestions system" do
       end
 
       gen = SuggestionGenerator.new(@player)
-      first_tag_weight = gen.offer_weights.first.contribution[:tags]
-      last_tag_weight = gen.offer_weights.last.contribution[:tags]
+      first_tag_weight = gen.suggestions.first.contribution[:tags]
+      last_tag_weight = gen.suggestions.last.contribution[:tags]
       expect(first_tag_weight > 2).to eq(true)
       expect(last_tag_weight > 1).to eq(true)
     end
@@ -69,7 +69,7 @@ RSpec.describe "suggestions system" do
     it "will have 0 weight if no matching tags exist" do 
       @player = FactoryBot.create(:new_player)
       gen = SuggestionGenerator.new(@player)
-      gen.offer_weights.each do |weight_data|
+      gen.suggestions.each do |weight_data|
         expect(weight_data.contribution[:tags]).to eq(0)
       end
     end
@@ -83,7 +83,7 @@ RSpec.describe "suggestions system" do
       @player.offers = []
       OfferClaimer.call(player: @player, offer: @offers.first)
       gen = SuggestionGenerator.new(@player)
-      tag_weights = gen.offer_weights.map{|weights| weights.contribution[:tags]}.uniq
+      tag_weights = gen.suggestions.map{|weights| weights.contribution[:tags]}.uniq
       expect(tag_weights.length).to eq(1)
     end
 
@@ -115,7 +115,7 @@ RSpec.describe "suggestions system" do
 
     it "will provide the correct contributions" do
       gen = SuggestionGenerator.new(@player)
-      claimed_weights = gen.offer_weights.map do |weight_set|
+      claimed_weights = gen.suggestions.map do |weight_set|
         weight_set.contribution[:claimed]
       end
       expect(claimed_weights.count(1)).to eq(3)
@@ -149,7 +149,7 @@ RSpec.describe "suggestions system" do
 
     it "will weigh if female" do 
       gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.offer_weights.map do |weight_set|
+      gender_weights = gen.suggestions.map do |weight_set|
         weight_set.contribution[:gender]
       end   
       expect(gender_weights.count(10)).to eq(9)
@@ -160,7 +160,7 @@ RSpec.describe "suggestions system" do
       @player.gender = "male"
       @player.save
       gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.offer_weights.map do |weight_set|
+      gender_weights = gen.suggestions.map do |weight_set|
         weight_set.contribution[:gender]
       end
       expect(gender_weights.count(0 )).to eq(9)
@@ -172,7 +172,7 @@ RSpec.describe "suggestions system" do
       @player.gender = "nonbinary"
       @player.save
       gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.offer_weights.map do |weight_set|
+      gender_weights = gen.suggestions.map do |weight_set|
         weight_set.contribution[:gender]
       end   
       expect(gender_weights.count(0)).to eq(10)
@@ -183,7 +183,7 @@ RSpec.describe "suggestions system" do
       @player.gender = "declined"
       @player.save
       gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.offer_weights.map do |weight_set|
+      gender_weights = gen.suggestions.map do |weight_set|
         weight_set.contribution[:gender]
       end   
       expect(gender_weights.count(0)).to eq(10)
@@ -199,6 +199,7 @@ RSpec.describe "suggestions system" do
       @player = FactoryBot.create(:new_player)
       7.times {FactoryBot.create(:tag)}
       @tags = Tag.all
+      # I needed specific and granular data to check that the ratios come out right.
       @offers = [
         Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 35, target_gender: "female"),
         Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 36, target_gender: "female"),
@@ -216,14 +217,14 @@ RSpec.describe "suggestions system" do
 
     it "will generate age weights" do 
       gen = SuggestionGenerator.new(@player)
-      gen.offer_weights do |weight_set|
+      gen.suggestions do |weight_set|
         expect(weight_set.contribution[:age] > 0).to eq(true)
       end
     end
 
     it "will assign 10 to exact matches" do 
       gen = SuggestionGenerator.new(@player)
-      gen.offer_weights do |weight_set|
+      gen.suggestions do |weight_set|
         if (offer.target_age == @player.age)
           expect(weight_set.contribution[:age]).to eq(10)
         end
@@ -233,19 +234,19 @@ RSpec.describe "suggestions system" do
     it "will assign differences for different ratios" do 
       gen = SuggestionGenerator.new(@player)
       # Just one max away - should round to 9 since not exact
-      expect(gen.offer_weights[1].contribution[:age]).to eq(9)
+      expect(gen.suggestions[1].contribution[:age]).to eq(9)
 
       # Over 1/10 away from mid on min (-2), should assign 8 after round
-      expect(gen.offer_weights[2].contribution[:age]).to eq(8)
+      expect(gen.suggestions[2].contribution[:age]).to eq(8)
 
       # Farther away at almost half - Should round to 6 on min
-      expect(gen.offer_weights[3].contribution[:age]).to eq(6)
+      expect(gen.suggestions[3].contribution[:age]).to eq(6)
 
       # 5 away, rounds to 6 after ratio on max
-      expect(gen.offer_weights[4].contribution[:age]).to eq(6)
+      expect(gen.suggestions[4].contribution[:age]).to eq(6)
 
       # 8 away, rounds to 5 after matio at max
-      expect(gen.offer_weights[5].contribution[:age]).to eq(5)
+      expect(gen.suggestions[5].contribution[:age]).to eq(5)
     end
 
   end

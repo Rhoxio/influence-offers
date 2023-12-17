@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React, { useState } from 'react';
 
-const Offer = ({offer, tags, show, setError, showActions}) =>{
+const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>{
   // console.log(tags)
   const unclaimedButtonData = {text: "Claim", disabled: false, claimed: false}
   const claimedButtonData = {text: "Claimed!", disabled: true, claimed: true}
@@ -76,9 +76,14 @@ const Offer = ({offer, tags, show, setError, showActions}) =>{
     }
   }
 
+  const logSuggestionData = () =>{
+    console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
+    console.log({...suggestionMetrics, offer: offer})
+  }
+
   if(show){
     return(
-      <div className="offer">
+      <div onClick={logSuggestionData} className="offer">
         <h5 className="offer-title">{offer.title}</h5>
         <p className="offer-description">{offer.description}</p>
         <div className="tag-container">
