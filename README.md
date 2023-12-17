@@ -38,9 +38,10 @@ Postgresql
    - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
  - run `bundle install` to install gems/dependencies
  - run `rails db:setup` to prepare the database and run migrations
+   - This should create, migrate, and seed the data.
  - Check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
    - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.
- - run `rails db:seed` to add development data to the database
+ - run `yarn` to install JS dependencies
  - add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
    - You can use `export EXECJS_RUNTIME=Node` temporarily unless you want to edit your shell profile. Just be aware that if you open a new shell, this will be un-set.
  - run `./bin/dev` to start the server with Shakapacker (This runs a `rails s` command - you'll see the output for both Shakapacker and Rails)
