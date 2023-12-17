@@ -46,15 +46,15 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
   const handleClaimResponse = (res) =>{
     if(res.status){
       switch(res.status){
-        case '409':
+        case 409:
           setError('You have already claimed this offer.')
           delegateButtonState("claimed")
           break;
-        case '401':
+        case 401:
           setError('Sign in again to continue.')
           delegateButtonState("unclaimed")
           break;
-        case '403':
+        case 403:
           setError('An error has occured. Refresh the page and try again.')
           delegateButtonState("unclaimed")
           break;
@@ -90,7 +90,6 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
   }  
 
   // UNCLAIM
-
   const deleteClickHandler = (event) =>{
     event.preventDefault()
     const response = deleteClaimOffer()
@@ -139,7 +138,6 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
         case 400:
           setError("Offer was not found. Refresh the page and try again.")
           delegateDeleteButtonState("initial")
-
         case 401:
           setError('Sign in again to continue.')
           delegateDeleteButtonState("initial")
@@ -153,6 +151,7 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
     }
   }  
 
+  // RENDER
   if(show){
     return(
       <div onClick={logSuggestionData} className="offer">
@@ -195,8 +194,6 @@ const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
       </div>
     )    
   }
-
-
 }
 
 export default Offer;

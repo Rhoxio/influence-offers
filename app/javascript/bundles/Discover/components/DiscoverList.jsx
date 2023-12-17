@@ -8,7 +8,6 @@ import ErrorDisplay from "./ErrorDisplay"
 const DiscoverList = ({renderForm}) => {
   const offersData = useContext(DiscoverContext)
   const offers = offersData.offers
-  const actionSet = offersData.actionSet
 
   const [activeOffers, setActiveOffers] = useState(offers)
   const [error, setError] = useState("")
