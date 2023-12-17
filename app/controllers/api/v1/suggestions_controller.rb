@@ -3,9 +3,13 @@ class Api::V1::SuggestionsController < ApplicationApiController
 
   def suggest
     player = Player.find(suggestion_params[:player_id])
-    suggestions = SuggestionGenerator.new(player).suggestions
-    offers = OffersFormatter.from_suggestions(suggestions)
-    render json: offers
+    if player == current_player
+      suggestions = SuggestionGenerator.new(player).suggestions
+      offers = OffersFormatter.from_suggestions(suggestions)
+      render json: offers
+    else
+      return respond_with_error('unauthorized', nil, "Please log in to continue.")
+    end
   end
 
   private
