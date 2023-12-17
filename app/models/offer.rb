@@ -33,6 +33,7 @@ class Offer < ApplicationRecord
   scope :not_targeting, ->(gender){where("target_gender != ?", gender)}
   scope :in_age_range, ->(age){where("min_age <= ? AND max_age >= ?", age, age)}
 
+  accepts_nested_attributes_for :tags
 
   # I originally went with a counted version that used before_save/incrementors to store the count in a column
   # I opted against that because it wasn't strictly required for performance purposes and

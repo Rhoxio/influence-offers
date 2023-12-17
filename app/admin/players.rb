@@ -5,7 +5,7 @@ ActiveAdmin.register Player do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :email, :encrypted_password, :reset_password_token, :reset_password_sent_at, :remember_created_at
+  permit_params :email, :age, :gender, offer_ids: []
   #
   # or
   #
@@ -14,5 +14,39 @@ ActiveAdmin.register Player do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+
+  
+
+  form do |f|
+    available_offers = player.offers.length > 0 ? (Offer.all - player.offers) : Offer.all
+    f.semantic_errors
+    f.inputs do
+      f.input :email
+      f.input :age
+      f.input :gender, :as => :select, collection: Player::GENDERS, input_html: {style:'width:40%'}
+
+      f.input :offers, :as => :select, collection: available_offers, input_html: {style:'width:40%; height: 200px;'}
+    end
+    
+    f.actions
+  end
+
+  show do |player|
+    attributes_table do 
+      row :id
+      row :email
+      row :age
+      row :gender
+    end
+
+    attributes_table_for player.offers do
+      row :title
+      row :target_age
+      row :target_gender
+      row :max_age
+      row :min_age
+    end      
+
+  end
   
 end
