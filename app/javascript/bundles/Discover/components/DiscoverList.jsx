@@ -5,9 +5,10 @@ import DiscoverForm from './DiscoverForm'
 import Offer from "./Offer"
 import ErrorDisplay from "./ErrorDisplay"
 
-const DiscoverList = () => {
+const DiscoverList = ({renderForm}) => {
   const offersData = useContext(DiscoverContext)
   const offers = offersData.offers
+
   const [activeOffers, setActiveOffers] = useState(offers)
   const [error, setError] = useState("")
 
@@ -16,12 +17,13 @@ const DiscoverList = () => {
     <ErrorDisplay error={error} setError={setError}/>
     <div className="discover-container">
       <h3 className="discover-title">Discover <span className="orange-text">Offers</span></h3>
-      <DiscoverForm setError={setError} setActiveOffers={setActiveOffers}/>
+      { offersData.renderForm && 
+        <DiscoverForm setError={setError} setActiveOffers={setActiveOffers}/>
+      }
       <div className="offers-list">
         { 
           activeOffers.length > 0 && activeOffers.map((collection, index) => (
             <Offer 
-              showActions={true} 
               setError={setError} 
               show={collection.show} 
               offer={collection.offer} 
@@ -33,7 +35,7 @@ const DiscoverList = () => {
         }
         {
           activeOffers.length === 0 && 
-          <p className="no-offers">It looks like no offers are avilable!</p>
+          <p className="no-offers">It looks like no offers are available!</p>
         }
       </div>
     </div>

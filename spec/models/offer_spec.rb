@@ -9,9 +9,6 @@ RSpec.describe Offer, type: :model do
     it { is_expected.to have_db_column(:target_gender).of_type(:string) }
     it { is_expected.to have_db_column(:max_age).of_type(:integer) }
     it { is_expected.to have_db_column(:min_age).of_type(:integer) }
-    it { is_expected.to have_db_column(:total_claimed).of_type(:integer) }
-
-    # test target_gender
   end  
 
   describe 'associations' do 
@@ -76,7 +73,16 @@ RSpec.describe Offer, type: :model do
         expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
       end
     end
-  end  
+  end
+
+  describe '#total_claimed' do
+    it "should provide the correct value" do 
+      offer = FactoryBot.create(:new_offer)
+      player = FactoryBot.create(:new_player)
+      OfferClaimer.call(player: player, offer: offer)
+      expect(offer.total_claimed).to eq(1)
+    end
+  end
 
   describe "defaults" do
     before(:each) do 

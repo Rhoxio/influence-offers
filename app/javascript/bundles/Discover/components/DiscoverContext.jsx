@@ -1,2 +1,2 @@
 import {createContext} from 'react';
-export const DiscoverContext = createContext([])
+export const DiscoverContext = createContext({})

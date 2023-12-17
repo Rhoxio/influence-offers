@@ -14,7 +14,6 @@ const ErrorDisplay = ({error, setError}) => {
   }
 
   return(
-
     <div 
       className="react-errors-container"
       style={styles}

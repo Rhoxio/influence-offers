@@ -1,37 +1,37 @@
 api:
   invalid_resource:
     code: '1'
-    status: '400'
+    status: 400
     title: 'Bad Request'
   unprocessable_entity:
     code: '2'
-    status: '422'
+    status: 422
     title: 'Unprocessable Entity'
   unauthorized:
     code: '3'
-    status: '401'
+    status: 401
     title: 'Unauthorized'
   not_found:
     code: '4'
-    status: '400'
+    status: 400
     title: "Not Found"
   standard_error:
     code: '5'
-    status: '500'
+    status: 500
     title: 'Standard Error'
   session_expired:
     code: '6'
-    status: '440'
+    status: 440
     title: 'Session Expired'
   request_timeout:
     code: '7'
-    status: '408'
+    status: 408
     title: "Request Timeout"
   forbidden:
     code: '8'
-    status: '403'
+    status: 403
     title: "Forbidden"
   conflict:
     code: '9'
-    status: '409'
+    status: 409
     title: 'Conflict'

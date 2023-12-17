@@ -1,18 +1,31 @@
 import PropTypes from 'prop-types';
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
+import { DiscoverContext } from './DiscoverContext'
 
-const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>{
-  // console.log(tags)
-  const unclaimedButtonData = {text: "Claim", disabled: false, claimed: false}
-  const claimedButtonData = {text: "Claimed!", disabled: true, claimed: true}
-  const pendingButtonData = {text: "Claiming...", disabled: true, claimed: false}
+const Offer = ({offer, tags, show, setError, suggestionMetrics}) =>{
+  const offersData = useContext(DiscoverContext)
+  const actionSet = offersData.actionSet
+
+  const unclaimedButtonData = {text: "Claim", disabled: false }
+  const claimedButtonData = {text: "Claimed!", disabled: true}
+  const pendingButtonData = {text: "Claiming...", disabled: true }
+
+  const deleteButtonData = {text: "Unclaim", disabled: false }
+  const deleteButtonPendingData = {text: "Unclaiming...", disabled: true }
+  const deleteButtonDoneData = {text: "Unclaimed!", disabled: true }
+
   const [buttonState, setButtonState] = useState(unclaimedButtonData)
+  const [deleteButtonState, setDeleteButtonState] = useState(deleteButtonData)
 
-  let buttonDisplay = {display: 'none'}
-  if(showActions){
-    buttonDisplay = {}
+  // Log Util
+  const logSuggestionData = () =>{
+    if(suggestionMetrics.total_weight > 0){
+      console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
+      console.log({...suggestionMetrics, offer: offer})      
+    }
   }
 
+  // CLAIM
   const claimClickHandler = (event) => {
     event.preventDefault()
     const response = postClaimOffer()
@@ -33,15 +46,15 @@ const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>
   const handleClaimResponse = (res) =>{
     if(res.status){
       switch(res.status){
-        case '409':
+        case 409:
           setError('You have already claimed this offer.')
           delegateButtonState("claimed")
           break;
-        case '401':
+        case 401:
           setError('Sign in again to continue.')
           delegateButtonState("unclaimed")
           break;
-        case '403':
+        case 403:
           setError('An error has occured. Refresh the page and try again.')
           delegateButtonState("unclaimed")
           break;
@@ -52,7 +65,7 @@ const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>
       delegateButtonState("claimed")
       return res
     }
-  }
+  }  
 
   const postClaimOffer = async (event) =>{
     const location = `${window.location.protocol}//${window.location.host}`
@@ -74,13 +87,71 @@ const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>
       setError(error.message)
       return error
     }
+  }  
+
+  // UNCLAIM
+  const deleteClickHandler = (event) =>{
+    event.preventDefault()
+    const response = deleteClaimOffer()
+    response.then((res) => (
+      handleDeleteClaimResponse(res)
+    ))    
   }
 
-  const logSuggestionData = () =>{
-    console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
-    console.log({...suggestionMetrics, offer: offer})
+  const deleteClaimOffer = async (event) =>{
+    const location = `${window.location.protocol}//${window.location.host}`
+    const url = `${location}/api/v1/offers/${offer.id}/unclaim`
+    const csrf = document.querySelector('meta[name="csrf-token"]').getAttribute("content")
+    const body = {
+      method: "DELETE",
+      headers: {
+        'X-CSRF-Token': csrf
+      }
+    }
+    try{
+      const response = await fetch(url, body)
+      delegateDeleteButtonState("pending")
+      const data = await response
+      return data
+    } catch (error) {
+      setError(error.message)
+      return error
+    }
+
   }
 
+  const delegateDeleteButtonState = (stateToSet) => {
+    const buttonStates = {
+      "initial": deleteButtonData,
+      "pending": deleteButtonPendingData,
+      "done": deleteButtonDoneData
+    }
+    setDeleteButtonState(buttonStates[stateToSet])
+  }  
+
+  const handleDeleteClaimResponse = (res) =>{
+    if(res.status){
+      switch(res.status){
+        case 204:
+          delegateDeleteButtonState("done")
+          return res
+        case 400:
+          setError("Offer was not found. Refresh the page and try again.")
+          delegateDeleteButtonState("initial")
+        case 401:
+          setError('Sign in again to continue.')
+          delegateDeleteButtonState("initial")
+        default:
+          setError(res.message)
+          delegateDeleteButtonState("initial")
+      }
+    } else {
+      delegateDeleteButtonState("initial")
+      return res
+    }
+  }  
+
+  // RENDER
   if(show){
     return(
       <div onClick={logSuggestionData} className="offer">
@@ -92,23 +163,37 @@ const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>
           ))}      
         </div>
 
-        <div style={buttonDisplay}>
-          <hr/>
-          <button 
-            data-offer-id={offer.id} 
-            onClick={claimClickHandler} 
-            className="claim-button"
-            disabled={buttonState.disabled}
-          >
-            {buttonState.text}
-          </button>
-        </div>
+        { actionSet === 'claim' && 
+          <div>
+            <hr/>
+            <button 
+              data-offer-id={offer.id} 
+              onClick={claimClickHandler} 
+              className="claim-button"
+              disabled={buttonState.disabled}
+            >
+              {buttonState.text}
+            </button>
+          </div>
+        }
+
+        { actionSet === 'unclaim' && 
+          <div>
+            <hr/>
+            <button 
+              data-offer-id={offer.id} 
+              onClick={deleteClickHandler} 
+              className="claim-button delete-button"
+              disabled={deleteButtonState.disabled}
+            >
+              {deleteButtonState.text}
+            </button>
+          </div>
+        }      
 
       </div>
     )    
   }
-
-
 }
 
 export default Offer;

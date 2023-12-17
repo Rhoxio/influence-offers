@@ -19,7 +19,8 @@ const DiscoverForm = ({setActiveOffers, setError}) => {
     {value: tag.id, label: tag.name}
   ))
 
-  const handleSubmit = (event) =>{
+  // Utils
+  const quashSubmit = (event) =>{
     event.preventDefault()
   }
 
@@ -127,7 +128,7 @@ const DiscoverForm = ({setActiveOffers, setError}) => {
   }  
 
   return(
-    <form onSubmit={handleSubmit} className="discover-form">
+    <form onSubmit={quashSubmit} className="discover-form">
       <p>The more you claim, the better the suggestions!</p>
       <button 
         onClick={suggestionClickHandler} 

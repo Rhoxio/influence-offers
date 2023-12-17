@@ -1,3 +1,9 @@
 <%= button_to "View Claimed Offers", claimed_offers_path, method: :get, class: "link-out" %>
 
-<%= react_component("Discover", props: {offers: @offers, tags: @tags, player: @player}, prerender: false) %>
+<%= react_component("Discover", props: {
+  offers: @offers, 
+  tags: @tags, 
+  player: @player, 
+  renderForm: true,
+  actionSet: 'claim'
+}, prerender: false) %>

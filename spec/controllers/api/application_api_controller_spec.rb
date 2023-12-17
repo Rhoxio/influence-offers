@@ -9,7 +9,7 @@ RSpec.describe ApplicationApiController do
   end   
 
   describe 'constant dependencies' do 
-    it "loads the API_ERRORS constant" do 
+    it "loads the $API_ERRORS global" do 
       expect(!!$API_ERRORS).to eq(true)
     end
   end  
