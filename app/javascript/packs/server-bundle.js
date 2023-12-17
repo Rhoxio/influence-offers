@@ -1,8 +1,10 @@
 import ReactOnRails from 'react-on-rails';
 
-import HelloWorld from '../bundles/HelloWorld/components/HelloWorldServer';
+import Discover from '../bundles/Discover/components/Discover';
+import Offer from '../bundles/Discover/components/Offer';
 
 // This is how react_on_rails can see the HelloWorld in the browser.
 ReactOnRails.register({
-  HelloWorld,
+  Discover,
+  Offer
 });
