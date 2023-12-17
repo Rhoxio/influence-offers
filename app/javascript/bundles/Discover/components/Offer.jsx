@@ -78,7 +78,7 @@ const Offer = ({offer, tags, show, setError, showActions, suggestionMetrics}) =>
 
   const logSuggestionData = () =>{
     console.info(`Suggestion Weight Data for: ${suggestionMetrics.title}`)
-    console.log(suggestionMetrics)
+    console.log({...suggestionMetrics, offer: offer})
   }
 
   if(show){
