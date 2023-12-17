@@ -96,8 +96,8 @@ class SuggestionGenerator < ApplicationService
       seed = (inner_diff.to_f / total_range.to_f) # 0.6
     end
 
-    score = (1 - seed)
-    weight = (score * 10).floor
+    score = (1 - seed) # grabs inverse diff, max: .8, min: .4
+    weight = (score * 10).floor # makes it into a whole number < 10
     return weight
   end
 
