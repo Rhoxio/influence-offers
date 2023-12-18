@@ -42,8 +42,9 @@ Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
    - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
 
 run `bundle install` to install gems/dependencies
- - Double-check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
-   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.
+   - Double-check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
+   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode. 
+ 
 run `yarn` to install JS dependencies
 
 add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
