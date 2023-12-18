@@ -68,6 +68,7 @@ run `rspec` in the project root
 
 ## Before Reviewing...
  - When you get to the Discover Offers page, you can open the browser console and click on any of the offers to get a `console.log()` of the weight data for each offer. It's just in there for transparency. I was using it fer debugging so I kept it in so you all can see 'under the hood' more easily.
+ - You can view the ActiveAdmin panels by visiting `/admin`. I didn't put a password auth on it in this case, but normally I would hook it up to Devise.
 
 ## My Thoughts:
 ### Retrospect:
