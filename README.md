@@ -66,6 +66,9 @@ navigate to `http://localhost:3000` in your browser to begin using the app
 ## Running Tests:
 run `rspec` in the project root
 
+## Before Reviewing...
+ - When you get to the Discover Offers page, you can open the browser console and click on any of the offers to get a `console.log()` of the weight data for each offer. It's just in there for transparency. I was using it fer debugging so I kept it in so you all can see 'under the hood' more easily.
+
 ## My Thoughts:
 ### Resrospect:
 Overall, the project was fun and interesting to build! I am used to dealing with larger scales of complexity and having to worry about future-proofing, so this was a nice respite from that. This also distanced from making vain attempts at predicting the future to design flexibility into the right parts of a system. If this app were to grow larger and actually integrate with external API services, I would definitely be able to make changes quickly as the build followed KISS principles and produced solid, working functionality without exploding scope on niceties and including too much functionality for the relative simplicity of the data modeling and UI. Things are by no means perfect, but I made an attempt to build the app with the 'right tool for the job' attitude while constantly questioning my previous assumptions. 
