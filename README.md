@@ -25,32 +25,40 @@ Gems:
 Database:  
 `Postgresql`
 
-## Setup:
- - Install [Node](https://nodejs.org/en/download)  
+## Setup:  
+Install [Node](https://nodejs.org/en/download)  
    - You can check which node version you are running by running: `node -v` 
    - More recent versions work just fine. My version is: `v18.16.0`
    - If you had to install Node, you'll need to reload your `.bash_profile` (or whatever you're using to load `PATH` variables) or reopen the shell.
- - Clone the repo down using: `git clone git@github.com:Rhoxio/influence-offers.git`
- - run `cd influence_offers` to navigate into the project root.
- - Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
+
+Clone the repo down using: `git clone git@github.com:Rhoxio/influence-offers.git`
+
+run `cd influence_offers` to navigate into the project root.
+
+Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
    - `rvm` or `rbenv` commands might be required depending on your local environment
    - [rvm docs](https://rvm.io/rvm/cli)
    - [rbenv docs](https://github.com/rbenv/rbenv)
    - A `.ruby-version` file exists in the project, so it has the correct reference for version management tools
- - run `bundle install` to install gems/dependencies
+
+run `bundle install` to install gems/dependencies
  - Double-check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
-   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.
- - run `yarn` to install JS dependencies
- - add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
+   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.  
+   - run `yarn` to install JS dependencies
+
+add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
    - You can use `export EXECJS_RUNTIME=Node` temporarily unless you want to edit your shell/bash/zsh profile. Just be aware that if you open a new window, this will be un-set.
    - I noticed that my environment didn't seem to care if I had this set or not, but yours might.
- - run `rails db:setup` to prepare the database and run migrations
-   - This should create the database, migrate, and seed the data. 
- - run `./bin/dev` to start the server with Shakapacker (This runs a `rails s` command - you'll see the output for both Shakapacker and Rails)
- - navigate to `http://localhost:3000` in your browser to begin using the app
 
-Running Tests:
-- run `rspec` in the project root
+run `rails db:setup` to prepare the database and run migrations
+   - This should create the database, migrate, and seed the data. 
+
+run `./bin/dev` to start the server with Shakapacker (This runs a `rails s` command - you'll see the output for both Shakapacker and Rails)  
+
+navigate to `http://localhost:3000` in your browser to begin using the app
+
+## Running Tests:
+run `rspec` in the project root
 
 ## My Thoughts:
 Overall, the project was fun and interesting to build! I am used to dealing with larger scales of complexity and having to worry about future-proofing, so this was a nice respite from that. This also distanced from making vain attempts at predicting the future to design flexibility into the right parts of a system. If this app were to grow larger and actually integrate with external API services, I would definitely be able to make changes quickly as the build followed KISS principles and produced solid, working functionality without exploding scope on niceties and including too much functionality for the relative simplicity of the data modeling and UI. THings are by no means perfect, but I made an attempt to build the app with the 'right tool for the job' attitude while constantly questioning my previous assumptions. 
