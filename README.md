@@ -46,6 +46,7 @@ run `bundle install` to install gems/dependencies
    - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode. 
  
 run `yarn` to install JS dependencies
+   - Make sure that port `3050` is not running anything. Shakapacker needs it for the dev server.
 
 add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
    - You can use `export EXECJS_RUNTIME=Node` temporarily unless you want to edit your shell/bash/zsh profile. Just be aware that if you open a new window, this will be un-set.
