@@ -134,7 +134,7 @@ In general, I keep my model callbacks limited strictly to things that should hap
 
 Instead, I opt to use a service like `OfferClaimer` as an association-assignment interface where all of the logic and necessary transactions can live and work in their own encapsulated environment. Dependency injection is important if you do this, because there's no good way to tell what the best query will be every time you need to associate a model and run some logic against the transaction. Using something like the shovel operator `<<` is super convenient and nice, but can also be seen as Rails giving you just enough rope to hang yourself with if you aren't careful about the implications of shoving something into an association. This is why I have `OfferClaimer` present in the codebase - it was in preparation for transaction manipulation in case I needed it later. 
 
-**TL;DR, Encapsulation is important, so using interfaces to handle combinatory data actions is cleaner and easier to maintain than callbacks. We should use validator classes for validation and leave callbacks for same-model scoped tasks.**
+**TL;DR, Encapsulation and single-responsibilty is important, so using interfaces to handle combinatory data actions is cleaner and easier to maintain than callbacks. We should use validator classes for validation and leave callbacks for same-model scoped tasks within reason.**
 
 ### **Composition vs Inheritance:**  
 In general, I tend to favor composition over inheritance in Rails apps. The complexity of this app didn't really have me writing shared logic on associated data or anything quite that abstract, but I wanted to mention it since I didn't have the opportunity to show how I like to design shared functionality. 
