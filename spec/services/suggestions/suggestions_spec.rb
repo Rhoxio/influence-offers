@@ -125,71 +125,130 @@ RSpec.describe "suggestions system" do
   end
 
   describe "gender weight" do 
-    before(:all) do 
-      Offer.destroy_all
-      Tag.destroy_all
+    context "singles" do 
+      before(:all) do 
+        Offer.destroy_all
+        Tag.destroy_all
 
-      @player = FactoryBot.create(:new_player)
-      7.times {FactoryBot.create(:tag)}
-      @tags = Tag.all
-      @offers = []
+        @player = FactoryBot.create(:new_player)
+        7.times {FactoryBot.create(:tag)}
+        @tags = Tag.all
+        @offers = []
 
-      9.times do 
+        9.times do 
+          offer = FactoryBot.create(:new_offer)
+          offer.tags << @tags.first(3)
+          @offers.push(offer)     
+        end
+
         offer = FactoryBot.create(:new_offer)
+        offer.target_genders = [FactoryBot.create(:male_gender)]
+        offer.save
         offer.tags << @tags.first(3)
-        @offers.push(offer)     
+        @offers.push(offer)
+
+      end    
+
+      it "will weigh if female" do 
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.offer.target_genders
+          weight_set.contribution[:gender]
+        end   
+
+        expect(gender_weights.count(10)).to eq(9)
+        expect(gender_weights.count(0)).to eq(1)    
       end
 
-      offer = FactoryBot.create(:new_offer)
-      offer.target_gender = "male"
-      offer.save
-      offer.tags << @tags.first(3)
-      @offers.push(offer)
-
-    end    
-
-    it "will weigh if female" do 
-      gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.suggestions.map do |weight_set|
-        weight_set.contribution[:gender]
-      end   
-      expect(gender_weights.count(10)).to eq(9)
-      expect(gender_weights.count(0)).to eq(1)    
-    end
-
-    it "will weigh if male" do 
-      @player.gender = "male"
-      @player.save
-      gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.suggestions.map do |weight_set|
-        weight_set.contribution[:gender]
+      it "will weigh if male" do 
+        @player.gender = "male"
+        @player.save
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.contribution[:gender]
+        end
+        expect(gender_weights.count(0 )).to eq(9)
+        expect(gender_weights.count(10)).to eq(1)
       end
-      expect(gender_weights.count(0 )).to eq(9)
-      expect(gender_weights.count(10)).to eq(1)
+
+      it "will not weigh if non-binary" do 
+        @player = FactoryBot.create(:new_player)
+        @player.gender = "nonbinary"
+        @player.save
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.contribution[:gender]
+        end   
+        expect(gender_weights.count(0)).to eq(10)
+      end
+
+      it "will not weigh if declined" do 
+        @player = FactoryBot.create(:new_player)
+        @player.gender = "declined"
+        @player.save
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.contribution[:gender]
+        end   
+        expect(gender_weights.count(0)).to eq(10)
+      end    
+
     end
 
-    it "will not weigh if non-binary" do 
-      @player = FactoryBot.create(:new_player)
-      @player.gender = "nonbinary"
-      @player.save
-      gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.suggestions.map do |weight_set|
-        weight_set.contribution[:gender]
-      end   
-      expect(gender_weights.count(0)).to eq(10)
+    context "multiple" do 
+      before(:all) do 
+        Offer.destroy_all
+        Tag.destroy_all
+
+        @player = FactoryBot.create(:new_player)
+        7.times {FactoryBot.create(:tag)}
+
+        @female = FactoryBot.create(:female_gender, label: "Female")
+        @male = FactoryBot.create(:male_gender, label: "Male")
+        @nonbinary = Gender.create(name: 'nonbinary', label: "Non-Binary")
+        @declined = Gender.create(name: 'declined', label: "Declined to Answer")
+
+        @tags = Tag.all
+        @offers = []
+
+        9.times do 
+          offer = FactoryBot.create(:new_offer)
+          offer.target_genders << [@female, @male]
+          @offers.push(offer)
+        end
+
+        offer = FactoryBot.create(:new_offer)
+        offer.target_genders = [@male]
+        offer.save
+        @offers.push(offer)
+
+        offer = FactoryBot.create(:new_offer)
+        offer.target_genders = [@nonbinary]
+        offer.save
+        @offers.push(offer)        
+      end 
+
+      it "will account for multiple genders on an offer" do 
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.contribution[:gender]
+        end   
+        expect(gender_weights.count(10)).to eq(9)       
+        expect(gender_weights.count(0)).to eq(2)       
+      end 
+
+      it "will weight nonbinary" do 
+        @player.gender = "nonbinary"
+        gen = SuggestionGenerator.new(@player)
+        gender_weights = gen.suggestions.map do |weight_set|
+          weight_set.contribution[:gender]
+        end   
+        expect(gender_weights.count(10)).to eq(1)       
+        expect(gender_weights.count(0)).to eq(10)         
+      end
+   
     end
-
-    it "will not weigh if declined" do 
-      @player = FactoryBot.create(:new_player)
-      @player.gender = "declined"
-      @player.save
-      gen = SuggestionGenerator.new(@player)
-      gender_weights = gen.suggestions.map do |weight_set|
-        weight_set.contribution[:gender]
-      end   
-      expect(gender_weights.count(0)).to eq(10)
-    end    
-
+    
   end
 
   describe "age weight" do 
@@ -202,12 +261,12 @@ RSpec.describe "suggestions system" do
       @tags = Tag.all
       # I needed specific and granular data to check that the ratios come out right.
       @offers = [
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 35, target_gender: "female"),
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 36, target_gender: "female"),
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 33, target_gender: "female"),
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 29, target_gender: "female"),
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 40, target_gender: "female"),
-        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 43, target_gender: "female")
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 35, target_genders: [FactoryBot.create(:female_gender)]),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 36, target_genders: [FactoryBot.create(:female_gender)]),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 33, target_genders: [FactoryBot.create(:female_gender)]),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 29, target_genders: [FactoryBot.create(:female_gender)]),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 40, target_genders: [FactoryBot.create(:female_gender)]),
+        Offer.create!(title: "Offer", description: "An Offer", max_age: 45, min_age: 25, target_age: 43, target_genders: [FactoryBot.create(:female_gender)])
       ]
 
       @offers.each do |offer|

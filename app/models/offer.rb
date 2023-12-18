@@ -1,7 +1,7 @@
 class Offer < ApplicationRecord
 
   AGE_BOUNDS = 1..125
-  GENDERS = ["male", "female", "nonbinary", "declined"].freeze
+  # GENDERS = ["male", "female", "nonbinary", "declined"].freeze
 
   validates :title, presence: true
   validates :title, length: {maximum: 80}
@@ -18,8 +18,8 @@ class Offer < ApplicationRecord
   validates :min_age, presence: true
   validates :min_age, numericality: {in: AGE_BOUNDS}
 
-  validates :target_gender, presence: true
-  validates :target_gender, inclusion: {in: GENDERS, message: "Invalid gender specified"}  
+  # validates :target_gender, presence: true
+  # validates :target_gender, inclusion: {in: GENDERS, message: "Invalid gender specified"}  
 
   # Using dependent: :destroy to keep data cleaner in the scope of this app.
   # Might leave this in for metrics in larger apps (or add soft delete or something), 
@@ -30,8 +30,11 @@ class Offer < ApplicationRecord
   has_many :offer_tags, dependent: :destroy
   has_many :tags, through: :offer_tags
 
-  scope :targeting, ->(gender){ where(target_gender: gender)}
-  scope :not_targeting, ->(gender){where("target_gender != ?", gender)}
+  has_many :offer_genders, dependent: :destroy
+  has_many :target_genders, through: :offer_genders, :source => 'gender'
+
+  # scope :targeting, ->(gender){ where(target_gender: gender)}
+  # scope :not_targeting, ->(gender){where("target_gender != ?", gender)}
   scope :in_age_range, ->(age){where("min_age <= ? AND max_age >= ?", age, age)}
 
   # I originally went with a counted version that used before_save/incrementors to store the count in a column

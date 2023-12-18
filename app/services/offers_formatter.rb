@@ -28,7 +28,8 @@ class OffersFormatter < ApplicationService
         tags: offer_data.offer.tags.sort_by(&:name),
         show: true,
         weight: offer_data.weight,
-        contribution: offer_data.contribution
+        contribution: offer_data.contribution,
+        genders: offer_data.offer.target_genders
       }
     end
   end
