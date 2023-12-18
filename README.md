@@ -43,8 +43,8 @@ Ensure you have Ruby version `3.1.2` installed and active by running `ruby -v`.
 
 run `bundle install` to install gems/dependencies
  - Double-check that Foreman is installed by running `gem list -i "^foreman$"` if it returns `true`, you are good to go.
-   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.  
-   - run `yarn` to install JS dependencies
+   - If it retuns `false`, run `gem install foreman`. It's included in the `Gemfile`, but this is an extra precaution to check since Shakapacker uses it to watch for changes in development mode.
+run `yarn` to install JS dependencies
 
 add `EXECJS_RUNTIME=Node` to your environment (for Shakapacker/React)
    - You can use `export EXECJS_RUNTIME=Node` temporarily unless you want to edit your shell/bash/zsh profile. Just be aware that if you open a new window, this will be un-set.
