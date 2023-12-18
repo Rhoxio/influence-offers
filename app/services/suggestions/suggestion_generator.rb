@@ -27,7 +27,8 @@ class SuggestionGenerator < ApplicationService
         tags: 0, 
         gender: 0, 
         age: 0, 
-        claimed: offer.total_claimed
+        claimed: offer.total_claimed,
+        included_genders: offer.target_genders.map(&:label)
       })
     end
   end
@@ -63,15 +64,10 @@ class SuggestionGenerator < ApplicationService
   end
 
   # GENDER
-  def gender_weighted?
-    ['male', 'female'].include?(@player.gender)
-  end
 
   def weigh_gender(weight_data)
     offer = weight_data.offer
-    if gender_weighted?
-      (weight_data.weight += 10 && weight_data.contribution[:gender] += 10) if offer.target_gender == @player.gender
-    end
+    (weight_data.weight += 10 && weight_data.contribution[:gender] += 10) if offer.target_genders.map(&:name).include?(@player.gender)
   end
 
   # AGE

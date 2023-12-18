@@ -24,7 +24,7 @@ ActiveAdmin.register Offer do
       f.input :min_age
       f.input :max_age
 
-      f.input :target_gender, :as => :select, collection: Offer::GENDERS, input_html: {style:'width:40%'}
+      f.input :target_genders, :as => :select, collection: Gender.all, input_html: {style:'width:40%'}
       f.input :tags, :as => :select, collection: Tag.all, input_html: {style:'width:40%;height: 100px;'}
     end
     

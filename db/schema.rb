@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2023_12_17_042344) do
+ActiveRecord::Schema[7.1].define(version: 2023_12_18_105556) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -38,6 +38,21 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_042344) do
     t.index ["player_id"], name: "index_claimed_offers_on_player_id"
   end
 
+  create_table "genders", force: :cascade do |t|
+    t.string "name"
+    t.string "label"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "offer_genders", force: :cascade do |t|
+    t.bigint "offer_id"
+    t.bigint "gender_id"
+    t.index ["gender_id", "offer_id"], name: "index_offer_genders_on_gender_id_and_offer_id", unique: true
+    t.index ["gender_id"], name: "index_offer_genders_on_gender_id"
+    t.index ["offer_id"], name: "index_offer_genders_on_offer_id"
+  end
+
   create_table "offer_tags", force: :cascade do |t|
     t.bigint "tag_id"
     t.bigint "offer_id"
@@ -56,7 +71,6 @@ ActiveRecord::Schema[7.1].define(version: 2023_12_17_042344) do
     t.integer "min_age"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.string "target_gender"
     t.index ["target_age"], name: "index_offers_on_target_age"
   end
 

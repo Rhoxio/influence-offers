@@ -2,12 +2,8 @@ class OffersController < ApplicationController
   before_action :authenticate_player!
 
   def discover
-    if current_player.offers.length == 0
-      @offers = OffersFormatter.from_base(Offer.preload(:tags).first(100))
-    else
-      suggestions = SuggestionGenerator.new(current_player).suggestions
-      @offers = OffersFormatter.from_suggestions(suggestions)
-    end
+    suggestions = SuggestionGenerator.new(current_player).suggestions
+    @offers = OffersFormatter.from_suggestions(suggestions)
     @player = current_player
     @tags = Tag.all
   end

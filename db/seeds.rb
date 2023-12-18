@@ -21,13 +21,14 @@ def random_description
 end
 
 def generate_offer(age_range, gender)
+  gender = [gender].flatten
   target_age = age_range.sample
   offer_name = (Faker::Adjective.positive + " " + Faker::Creature::Animal.name).split(" ").map(&:capitalize).join(" ")
   offer_data = {
     title: offer_name,
     description: random_description,
     target_age: target_age,
-    target_gender: gender,
+    target_genders: gender,
     max_age: target_age + ((3..6).to_a.sample),
     min_age: target_age - ((3..6).to_a.sample)
   }
@@ -54,6 +55,19 @@ if Rails.env.development?
   end
   puts bar
 
+  
+  if Gender.all.count == 0
+    puts "Creating Genders...".blue
+    gender_sets = Gender::GENDERS.zip(Gender::LABELS)
+    gender_sets.each do |set|
+      Gender.create!(name: set[0], label: set[1])
+      puts "Created Gender: #{set[1]}".blue
+    end
+  else
+    puts "Skipping Genders".yellow
+  end
+  puts bar
+
   # I want some variance in the offers. 
   # 67% female, 88% 25+ years old according to the website.
   # I can follow these metrics fairly easily.
@@ -69,37 +83,48 @@ if Rails.env.development?
 
     random_distribution = (16..65).to_a
 
+    female = Gender.find_by(name: 'female')
+    male = Gender.find_by(name: 'male')
+    nonbinary = Gender.find_by(name: 'nonbinary')
+    declined = Gender.find_by(name: 'declined')
+
     # Females
     # 60 Lucrative, 4 Over, 3 under - Gives close to an 88% ratio.
     # 60 + 4 + 3 = 67, -33
     60.times do
-      generate_offer(lucrative_female_age_range, "female")
+      generate_offer(lucrative_female_age_range, female)
     end
 
     4.times do 
-      generate_offer(upper_female_age_range, "female")     
+      generate_offer(upper_female_age_range, female)     
     end
 
     3.times do 
-      generate_offer(lower_female_age_range, "female")     
+      generate_offer(lower_female_age_range, female)     
     end    
 
     # Males
-    # 67+18 = 85, -15
-    18.times do 
-      generate_offer(random_distribution, "male")
+    # 67+8 = 75, -25
+    8.times do 
+      generate_offer(random_distribution, male)
+    end
+
+    # Males & Females
+    # 75+10 =85, -15
+    10.times do 
+      generate_offer(random_distribution, [male, female])
     end
 
     # Non-Binary
     # 85+7 = 92, -8
     7.times do 
-      generate_offer(random_distribution, "nonbinary")
+      generate_offer(random_distribution, nonbinary)
     end
 
     # Declined
     # 92+8 = 100, 0
     8.times do 
-      generate_offer(random_distribution, "declined")
+      generate_offer(random_distribution, declined)
     end
   end
 
