@@ -2,10 +2,11 @@ require 'rails_helper'
 
 RSpec.describe "suggestions system" do
 
-  # before(:all) do 
-  #   Offer.destroy_all
-  #   Tag.destroy_all  
-  # end
+  # Lots of manual data generation in this... 
+  # It's better than setting up a whole bunch of the relevant 
+  # factories. If this was a larger app, I would
+  # take the time to actually mock everything and create
+  # more applicable 'playgrounds' for testing this functionality.
 
   describe "tag_weights" do 
     before(:all) do 

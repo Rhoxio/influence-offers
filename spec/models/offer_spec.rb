@@ -57,10 +57,17 @@ RSpec.describe Offer, type: :model do
 
     context "target_age" do 
       it "should be valid if in range" do 
-        Offer::AGE_BOUNDS.to_a.each do |age|
+        (@offer.min_age..@offer.max_age).to_a.each do |age|
           @offer.target_age = age
           expect(@offer.valid?).to eq(true)
         end
+      end
+
+      it "should error if not in between min_age and max_age" do 
+        @offer.target_age = @offer.max_age + 1
+        expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
+        @offer.target_age = @offer.min_age - 1
+        expect{@offer.save!}.to raise_error(ActiveRecord::RecordInvalid)
       end
 
       it "should error if out of range" do
@@ -140,7 +147,5 @@ RSpec.describe Offer, type: :model do
         end
       end
     end
-
   end
-
 end

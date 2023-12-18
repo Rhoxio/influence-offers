@@ -5,11 +5,11 @@ import { DiscoverContext } from './DiscoverContext'
 
 const Discover = (props) => {
   return(
-      <>
-      <DiscoverContext.Provider value={props}>
-        <DiscoverList/>
-      </DiscoverContext.Provider>
-      </>
+    <>
+    <DiscoverContext.Provider value={props}>
+      <DiscoverList/>
+    </DiscoverContext.Provider>
+    </>
   )
 }
 

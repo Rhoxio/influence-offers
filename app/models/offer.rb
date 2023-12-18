@@ -10,6 +10,7 @@ class Offer < ApplicationRecord
 
   validates :target_age, presence: true
   validates :target_age, numericality: {in: AGE_BOUNDS}
+  validates_with OfferTargetAgeRangeValidator
 
   validates :max_age, presence: true
   validates :max_age, numericality: {in: AGE_BOUNDS}

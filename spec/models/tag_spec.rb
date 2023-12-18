@@ -13,16 +13,10 @@ RSpec.describe Tag, type: :model do
     it { should validate_uniqueness_of(:name) }
   end
 
-  describe 'associations' do 
-    # TODO
-  end
-
   describe "defaults" do
     it "will #generate_slug before saving" do
       tag = Tag.create(name: "Cool Tag")
       expect(tag.slug).to eq("cool_tag")
     end
   end
-
-
 end
