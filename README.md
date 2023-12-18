@@ -61,10 +61,29 @@ navigate to `http://localhost:3000` in your browser to begin using the app
 run `rspec` in the project root
 
 ## My Thoughts:
+### Resrospect:
 Overall, the project was fun and interesting to build! I am used to dealing with larger scales of complexity and having to worry about future-proofing, so this was a nice respite from that. This also distanced from making vain attempts at predicting the future to design flexibility into the right parts of a system. If this app were to grow larger and actually integrate with external API services, I would definitely be able to make changes quickly as the build followed KISS principles and produced solid, working functionality without exploding scope on niceties and including too much functionality for the relative simplicity of the data modeling and UI. THings are by no means perfect, but I made an attempt to build the app with the 'right tool for the job' attitude while constantly questioning my previous assumptions. 
 
 Of course I can add things like Sieqkiq and Redis for background processing, Opensearch for weighted queries, more nuanced abstrations to better evoke the potential of the data model and provide more explicit interfacing... the list goes on about the things I **COULD** do. This project was about setting a limit and doing the best I could within that scope, and I feel I was successful. I learned a lot about how I feel software should be written, and at the end of the day, how I can help others write better software and provide insights from direct experience versus the top three results on Google. One of the wonderful things about software is that every time you write something you are reinforcing something that you learned previously and teasing the nuance from it. You can write the same code twice in different context - but you express the same heirarchies of thought in different ways all the time!
+***
+### Feedback:
+Overall, I liked the project and REALLY appreciated the loose deadline. Even though what you proposed seemed like a simple CRUD app, there's hidden complexity when it comes to implementing the age and gender offer suggestion feature. Do tehy just use `.sample`? Do they build a system to suggest? Do they build a UI to cycle matching records? There are definite possibilities, and having enough freedom to hang yourself with and seeing how devs reign in scope seems like a good plan!
 
+The proposal doc gave me enough information to plan out a very basic Rails app, but anything past that was almost too open to interpretation. I felt like it was almost TOO non-specific and wasn't clear on some of the terminology. I read it closely a few times before writing/planning anything, but cursory reads afterwards sometimes freaked me out and I felt like I missed something. It was just an impression I had - I don't know how actionable it is. I can think of a million reasons why the doc provided was sparse, but I'll never know unless I'm hired and you tell me! 🙂
+
+I have a [retired hiring proposal doc](https://gist.github.com/Rhoxio/d78343d4caf0a4ca3eb60e40b6047d78) I created and used to hire a Front-End developer and can share publicly (and legally, as it became public over a year ago) - I think it is a fair example of something more specific. I got a really great and talented hire from it out of ~30 people I gave it to, so I like to think it did a good job of vetting people. 
+***
+## Challenges
+
+### The Great React and Shakapacker Disaster of Dec, 2023
+[In this pull request](https://github.com/Rhoxio/influence-offers/pull/3) I outline the largest challenge of the project outside of scoping: dependency management and file linkage debugging in the context of libraries that 'worked' on initialization and initial setup, but broke inexplicably with no changes to the code in a project that already has hours of code, work, and planning put into it. 
+
+### Scope
+Stopping myself from going overboard on the scope and abstraction aspects of this project was the next big challenge. I've been so used to building larger things, and having to cut my expectations back and focus on creating a solid base wasn't a skill I've had to exercise as much as 'building on top of 50 other models' kind of work. I was constantly thinking things like, "Man, I want to set this Sidekiq task up to handle this stuff async and save the generated suggestions instead to increase response speed, but it's just stright up out of scope!" or "I want to use Opensearch to make the Offer weighting scalable and use their awesome systems, but it's out of scope!". I couldn't introduce other technology dependencies because it would make setup on your end too cumbersome even though I knew of a great technology to use! So, I had to write code to do things that were "good enough". That's a part of being a software dev sometimes, and it did give me some valuable persective on how I tend to think about software development in modernity where "just use this service" mentatlities are both a blessing and a curse. 
+
+### Clarity
+If you haven't noticed, I do like to write about the software I produce. I made an extra effort to write clear commit messages, write comments in pull requests, and generally just be communicative. I was doubly dilligent about being explicit this time. 
+***
 ## Reasonable Changes to Project Proposal in Implementation:  
 
 ### Instead of a unique `user_name` field, the project uses `email`.  
